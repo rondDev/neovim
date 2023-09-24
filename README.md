@@ -91,6 +91,10 @@ NVIM_APPNAME=rondDev/neovim/ nvim
 
 - [ThePrimeagen/harpoon](https://dotfyle.com/plugins/ThePrimeagen/harpoon)
 
+### note-taking
+
+- [nvim-neorg/neorg](https://dotfyle.com/plugins/nvim-neorg/neorg)
+
 ### nvim-dev
 
 - [folke/neodev.nvim](https://dotfyle.com/plugins/folke/neodev.nvim)
