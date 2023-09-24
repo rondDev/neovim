@@ -65,6 +65,20 @@ nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 -- nnoremap("<leader>wh", "<cmd>split<cr>", { desc = "Create [W]indow [H]orizontally" })
 -- nnoremap("<leader>wb", "<cmd>split<cr>", { desc = "Create [W]indow [B]ottom" })
 -- nnoremap("<leader>wq", "<cmd>q<cr>", { desc = "[W]indow [Q]uit" })
+wk.register({
+	o = {
+		name = "open",
+		c = { "<cmd>FineCmdline<cr>", "[O]pen [C]ommand bar" },
+		t = { '<cmd>FloatermNew --cmd="echo "jsdfl""<cr>', "[O]pen [T]erminal" },
+	},
+}, { prefix = "<leader>" })
+
+wk.register({
+	t = {
+		name = "toggle",
+		t = { "<cmd>FloatermToggle<cr>", "[T]oggle [T]erminal" },
+	},
+}, { prefix = "<leader>" })
 
 wk.register({
 	w = {
@@ -195,7 +209,7 @@ nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
 
 -- TSC autocommand keybind to run TypeScripts tsc
-nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
+-- nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
 
 -- Harpoon keybinds --
 -- Open harpoon ui
@@ -348,9 +362,9 @@ nnoremap("<leader>[", function()
 end, { desc = "Illuminate: Goto previous reference" })
 
 -- Open Copilot panel
-nnoremap("<leader>oc", function()
-	require("copilot.panel").open()
-end, { desc = "[O]pen [C]opilot panel" })
+-- nnoremap("<leader>oc", function()
+-- 	require("copilot.panel").open()
+-- end, { desc = "[O]pen [C]opilot panel" })
 
 -- nvim-ufo keybinds
 nnoremap("zR", require("ufo").openAllFolds)
@@ -378,7 +392,7 @@ vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
 -- Terminal --
 -- Enter normal mode while in a terminal
 tnoremap("<esc>", [[<C-\><C-n>]])
-tnoremap("jj", [[<C-\><C-n>]])
+-- tnoremap("jj", [[<C-\><C-n>]])
 
 -- Window navigation from terminal
 tnoremap("<C-h>", [[<Cmd>wincmd h<CR>]])
