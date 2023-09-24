@@ -189,10 +189,59 @@ lazy.setup({
 
 	--Install nvim-ufo for better folds
 	{ "kevinhwang91/nvim-ufo", dependencies = "kevinhwang91/promise-async" },
+
 	"ThePrimeagen/git-worktree.nvim",
+
 	"f-person/git-blame.nvim",
+
 	{ "kdheepak/lazygit.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+
 	{
 		"max397574/better-escape.nvim",
+	},
+
+	{
+		"nvim-neorg/neorg",
+		build = ":Neorg sync-parsers",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("neorg").setup({
+				load = {
+					["core.defaults"] = {},
+					["core.concealer"] = {},
+					["core.dirman"] = {
+						config = {
+							workspaces = {
+								todo = "~/norg/todo",
+								notes = "~/norg/notes",
+								projects = "~/norg/projects",
+								scratch = "~/norg/scratch",
+							},
+							default_workspace = "notes",
+						},
+					},
+				},
+			})
+
+			vim.wo.foldlevel = 99
+			vim.wo.conceallevel = 2
+		end,
+	},
+	{
+		"VonHeikemen/fine-cmdline.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+	},
+	"voldikss/vim-floaterm",
+	{
+		"glacambre/firenvim",
+
+		-- Lazy load firenvim
+		-- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+		lazy = not vim.g.started_by_firenvim,
+		build = function()
+			vim.fn["firenvim#install"](0)
+		end,
 	},
 })
