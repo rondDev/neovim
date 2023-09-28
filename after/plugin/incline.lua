@@ -1,3 +1,2 @@
-local incline = require("incline")
+vim.o.laststatus = 3
 require("incline").setup()
-incline.setup()

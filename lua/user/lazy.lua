@@ -190,6 +190,7 @@ lazy.setup({
 
 	"f-person/git-blame.nvim",
 
+	-- This is just backup at the moment
 	{ "kdheepak/lazygit.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 
 	{
@@ -250,8 +251,6 @@ lazy.setup({
 		branch = "main",
 		-- event = "BufReadPost",
 		opts = {
-			window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
-			hide = { cursorline = true },
 			-- ignore = { buftypes = function(bufnr, buftype) return false end },
 			render = function(props)
 				if vim.bo[props.buf].buftype == "terminal" then
@@ -266,7 +265,7 @@ lazy.setup({
 				local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "bold,italic" or "bold"
 
 				local function get_git_diff()
-					local icons = require("lazyvim.config").icons.git
+					local icons = { removed = "", changed = "", added = "" }
 					icons["changed"] = icons.modified
 					local signs = vim.b[props.buf].gitsigns_status_dict
 					local labels = {}
@@ -284,8 +283,8 @@ lazy.setup({
 					return labels
 				end
 				local function get_diagnostic_label()
-					local icons = require("lazyvim.config").icons.diagnostics
 					local label = {}
+					local icons = { error = "", warn = "", info = "", hint = "" }
 
 					for severity, icon in pairs(icons) do
 						local n = #vim.diagnostic.get(
@@ -341,4 +340,14 @@ lazy.setup({
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
 	"unblevable/quick-scope",
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"sindrets/diffview.nvim",
+			"ibhagwan/fzf-lua",
+		},
+		config = true,
+	},
 })

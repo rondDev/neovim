@@ -17,9 +17,7 @@ local M = {}
 -- Disable Space bar since it'll be used as the leader key
 nnoremap("<space>", "<nop>")
 
--- rond is stupid
 -- nnoremap("<leader>gs", git_worktree.create_git_worktree())
-nnoremap("<leader>gg", "<cmd>LazyGit<cr>")
 
 -- Window +  better kitty navigation
 nnoremap("<C-j>", function()
@@ -65,6 +63,17 @@ nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 -- nnoremap("<leader>wh", "<cmd>split<cr>", { desc = "Create [W]indow [H]orizontally" })
 -- nnoremap("<leader>wb", "<cmd>split<cr>", { desc = "Create [W]indow [B]ottom" })
 -- nnoremap("<leader>wq", "<cmd>q<cr>", { desc = "[W]indow [Q]uit" })
+
+wk.register({
+	g = {
+		name = "git",
+		g = { "<cmd>Neogit<cr>", "Open Neogit (preferred)" },
+		l = { "<cmd>LazyGit<cr>", "Open LazyGit" },
+		v = { "<cmd>Neogit kind=vsplit<cr>", "Open Neogit (VSplit)" },
+		s = { "git_worktree.create_git_worktree()", "Create Git Worktree" },
+	},
+}, { prefix = "<leader>" })
+
 wk.register({
 	o = {
 		name = "open",
