@@ -165,10 +165,6 @@ lazy.setup({
 	-- Install vim-illuminate to hightlight other uses of the word under your cursor
 	"RRethy/vim-illuminate",
 
-	-- Install Github Copilot
-	-- "github/copilot.vim",
-	"zbirenbaum/copilot.lua",
-
 	-- Install tsc.nvim to enable project-wide type checking and diagnostics
 	-- use({ "dmmulroy/tsc.nvim" })
 	"dmmulroy/tsc.nvim",
@@ -234,4 +230,115 @@ lazy.setup({
 		},
 	},
 	"voldikss/vim-floaterm",
+	{
+		"Rawnly/gist.nvim",
+		cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
+		config = true,
+	},
+	-- `GistsList` opens the selected gif in a terminal buffer,
+	-- nvim-unception uses neovim remote rpc functionality to open the gist in an actual buffer
+	-- and prevents neovim buffer inception
+	{
+		"samjwill/nvim-unception",
+		lazy = false,
+		init = function()
+			vim.g.unception_block_while_host_edits = true
+		end,
+	},
+	{
+		"b0o/incline.nvim",
+		branch = "main",
+		-- event = "BufReadPost",
+		opts = {
+			window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
+			hide = { cursorline = true },
+			-- ignore = { buftypes = function(bufnr, buftype) return false end },
+			render = function(props)
+				if vim.bo[props.buf].buftype == "terminal" then
+					return {
+						{ " " .. vim.bo[props.buf].channel .. " ", group = "DevIconTerminal" },
+						{ " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
+					}
+				end
+
+				local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+				local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+				local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "bold,italic" or "bold"
+
+				local function get_git_diff()
+					local icons = require("lazyvim.config").icons.git
+					icons["changed"] = icons.modified
+					local signs = vim.b[props.buf].gitsigns_status_dict
+					local labels = {}
+					if signs == nil then
+						return labels
+					end
+					for name, icon in pairs(icons) do
+						if tonumber(signs[name]) and signs[name] > 0 then
+							table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
+						end
+					end
+					if #labels > 0 then
+						table.insert(labels, { "┊ " })
+					end
+					return labels
+				end
+				local function get_diagnostic_label()
+					local icons = require("lazyvim.config").icons.diagnostics
+					local label = {}
+
+					for severity, icon in pairs(icons) do
+						local n = #vim.diagnostic.get(
+							props.buf,
+							{ severity = vim.diagnostic.severity[string.upper(severity)] }
+						)
+						if n > 0 then
+							table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity })
+						end
+					end
+					if #label > 0 then
+						table.insert(label, { "┊ " })
+					end
+					return label
+				end
+
+				local buffer = {
+					{ get_diagnostic_label() },
+					{ get_git_diff() },
+					{ ft_icon .. " ", guifg = ft_color, guibg = "none" },
+					{ filename .. " ", gui = modified },
+					-- { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
+				}
+				return buffer
+			end,
+		},
+	},
+	{
+		"folke/twilight.nvim",
+	},
+	{
+		"mfussenegger/nvim-dap",
+	},
+	-- lazy.nvim
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+	},
+	"unblevable/quick-scope",
 })

@@ -77,6 +77,7 @@ wk.register({
 	t = {
 		name = "toggle",
 		t = { "<cmd>FloatermToggle<cr>", "[T]oggle [T]erminal" },
+		z = { "<cmd>Twilight<cr>", "[T]oggle Twilight ([Z]en)" },
 	},
 }, { prefix = "<leader>" })
 
