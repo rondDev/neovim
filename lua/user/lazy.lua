@@ -349,5 +349,11 @@ lazy.setup({
 			"ibhagwan/fzf-lua",
 		},
 		config = true,
+		init = function()
+			vim.cmd([[
+      let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+      ]])
+		end,
 	},
+	"ziglang/zig.vim",
 })
