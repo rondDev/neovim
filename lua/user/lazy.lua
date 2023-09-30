@@ -190,9 +190,6 @@ lazy.setup({
 
 	"f-person/git-blame.nvim",
 
-	-- This is just backup at the moment
-	{ "kdheepak/lazygit.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-
 	{
 		"max397574/better-escape.nvim",
 	},

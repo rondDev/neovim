@@ -68,9 +68,7 @@ wk.register({
 	g = {
 		name = "git",
 		g = { "<cmd>Neogit<cr>", "Open Neogit (preferred)" },
-		l = { "<cmd>LazyGit<cr>", "Open LazyGit" },
 		v = { "<cmd>Neogit kind=vsplit<cr>", "Open Neogit (VSplit)" },
-		s = { "git_worktree.create_git_worktree()", "Create Git Worktree" },
 	},
 }, { prefix = "<leader>" })
 
