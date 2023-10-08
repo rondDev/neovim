@@ -6,3 +6,7 @@ vim.api.nvim_create_user_command("RToggleInlay", function()
 		require("notify")("Toggling inlay hints requires at least Neovim 0.10")
 	end
 end, {})
+
+vim.api.nvim_create_user_command("ToggleStream", function()
+	vim.o.guifont = "JetBrainsMonoNL\\ Nerd\\ Font\\ Mono:h16"
+end, {})
