@@ -16,6 +16,8 @@ require("mason-lspconfig").setup({
 	automatic_installation = { exclude = { "ocamllsp" } },
 })
 
+require("lsp_lines").setup()
+
 -- Override tsserver diagnostics to filter out specific messages
 local messages_to_filter = {
 	"This may be converted to an async function.",
@@ -62,6 +64,9 @@ local servers = {
 					checkThirdParty = false,
 					telemetry = false,
 				},
+				hint = {
+					enable = true,
+				},
 			},
 		},
 	},
@@ -69,6 +74,7 @@ local servers = {
 	-- ocamllsp = {},
 	prismals = {},
 	pyright = {},
+	rust_analyzer = {},
 	solidity = {},
 	sqlls = {},
 	svelte = {
@@ -169,6 +175,7 @@ require("lspconfig.ui.windows").default_options.border = "rounded"
 
 -- Configure diagostics border
 vim.diagnostic.config({
+	virtual_text = false,
 	float = {
 		border = "rounded",
 	},

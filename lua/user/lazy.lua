@@ -135,7 +135,11 @@ lazy.setup({
 	"numToStr/Comment.nvim",
 
 	-- Install indent_blankline to style indentation
-	"lukas-reineke/indent-blankline.nvim",
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = {},
+	},
 
 	-- Install nvim-autopairs  and nvim-ts-autotag to auto close brackets & tags
 	"windwp/nvim-autopairs",
@@ -353,4 +357,9 @@ lazy.setup({
 		end,
 	},
 	"ziglang/zig.vim",
+	"simrat39/rust-tools.nvim",
+	"wakatime/vim-wakatime",
+	{
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	},
 })

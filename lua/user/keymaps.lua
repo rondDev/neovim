@@ -65,6 +65,13 @@ nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 -- nnoremap("<leader>wq", "<cmd>q<cr>", { desc = "[W]indow [Q]uit" })
 
 wk.register({
+	c = {
+		name = "code",
+		i = { "<cmd>RToggleInlay<cr>", "Toggle Inlay Hints" },
+	},
+}, { prefix = "<leader>" })
+
+wk.register({
 	g = {
 		name = "git",
 		g = { "<cmd>Neogit<cr>", "Open Neogit (preferred)" },
@@ -76,13 +83,14 @@ wk.register({
 	o = {
 		name = "open",
 		c = { "<cmd>FineCmdline<cr>", "[O]pen [C]ommand bar" },
-		t = { '<cmd>FloatermNew --cmd="echo "jsdfl""<cr>', "[O]pen [T]erminal" },
+		t = { "<cmd>term<cr>", "[O]pen [T]erminal" },
 	},
 }, { prefix = "<leader>" })
 
 wk.register({
 	t = {
 		name = "toggle",
+		s = { "<cmd>ToggleStream<cr>", "[T]oggle [S]tream Mode" },
 		t = { "<cmd>FloatermToggle<cr>", "[T]oggle [T]erminal" },
 		z = { "<cmd>Twilight<cr>", "[T]oggle Twilight ([Z]en)" },
 	},

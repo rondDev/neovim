@@ -9,5 +9,6 @@ require("illuminate").configure({
 		"harpoon",
 		"toggleterm",
 		"neo-tree",
+		"Spectre",
 	},
 })

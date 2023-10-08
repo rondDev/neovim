@@ -1,3 +1,7 @@
-require("indent_blankline").setup({
-	show_trailing_blankline_indent = false,
+require("ibl").setup({
+	scope = {
+		enabled = true,
+		show_start = true,
+		show_end = true,
+	},
 })
