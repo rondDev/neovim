@@ -1,0 +1,9 @@
+-- require("noice").setup({
+-- 	cmdline = {
+-- 		enabled = false,
+-- 		view = "cmdline_popup",
+-- 	},
+-- 	popupmenu = {
+-- 		enabled = false,
+-- 	},
+-- })
