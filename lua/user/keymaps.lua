@@ -67,36 +67,29 @@ nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 wk.register({
 	c = {
 		name = "code",
+		c = { "<cmd>cclose<cr>zz", "Close quickfix list" },
 		i = { "<cmd>RToggleInlay<cr>", "Toggle Inlay Hints" },
+		l = { vim.diagnostic.setqflist(), "Place all diagnostics into quickfix list" },
+		n = { "<cmd>cnext<cr>zz", "Go to next quickfix list item" },
+		o = { "<cmd>copen<cr>zz", "Open the quickfix list" },
+		p = { "<cmd>cprev<cr>zz", "Previous quickfix list item" },
 	},
-}, { prefix = "<leader>" })
-
-wk.register({
 	g = {
 		name = "git",
 		g = { "<cmd>Neogit<cr>", "Open Neogit (preferred)" },
 		v = { "<cmd>Neogit kind=vsplit<cr>", "Open Neogit (VSplit)" },
 	},
-}, { prefix = "<leader>" })
-
-wk.register({
 	o = {
 		name = "open",
 		c = { "<cmd>FineCmdline<cr>", "[O]pen [C]ommand bar" },
 		t = { "<cmd>term<cr>", "[O]pen [T]erminal" },
 	},
-}, { prefix = "<leader>" })
-
-wk.register({
 	t = {
 		name = "toggle",
 		s = { "<cmd>ToggleStream<cr>", "[T]oggle [S]tream Mode" },
 		t = { "<cmd>FloatermToggle<cr>", "[T]oggle [T]erminal" },
 		z = { "<cmd>Twilight<cr>", "[T]oggle Twilight ([Z]en)" },
 	},
-}, { prefix = "<leader>" })
-
-wk.register({
 	w = {
 		name = "Window",
 		v = { "<cmd>vsplit<cr>", "Split [W]indow [V]ertically" },
@@ -105,6 +98,7 @@ wk.register({
 		b = { "<cmd>split<cr>", "Split [W]indow [B]ottom" },
 		q = { "<cmd>q<cr>", "[W]indow [Q]uit" },
 	},
+	x = { "<cmd>BufferPick<cr>", "Pick buffer" },
 }, { prefix = "<leader>" })
 
 -- Quit with leader key
@@ -114,9 +108,9 @@ nnoremap("<leader>q", "<cmd>q<cr>", { silent = false })
 nnoremap("<leader>z", "<cmd>wq<cr>", { silent = false })
 
 -- Map neo-tree to <leader>e
-nnoremap("<leader>e", "<cmd>Neotree toggle<cr>")
+-- nnoremap("<leader>e", "<cmd>Neotree toggle<cr>")
 -- Focus on current buffer in neo-tree
-nnoremap("<leader>E", "<cmd>Neotree action=focus<cr>")
+nnoremap("<leader>E", "<cmd>Neotree toggle<cr>")
 
 -- Center buffer while navigating
 nnoremap("<C-u>", "<C-u>zz")
@@ -195,24 +189,24 @@ nnoremap("<leader>d", function()
 end)
 
 -- Place all dignostics into a qflist
-nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
+-- nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
 
 -- Navigate to next qflist item
-nnoremap("<leader>cn", ":cnext<cr>zz")
+-- nnoremap("<leader>cn", ":cnext<cr>zz")
 
 -- Navigate to previos qflist item
-nnoremap("<leader>cp", ":cprevious<cr>zz")
+-- nnoremap("<leader>cp", ":cprevious<cr>zz")
 
 -- Open the qflist
-nnoremap("<leader>co", ":copen<cr>zz")
+-- nnoremap("<leader>co", ":copen<cr>zz")
 
 -- Close the qflist
-nnoremap("<leader>cc", ":cclose<cr>zz")
+-- nnoremap("<leader>cc", ":cclose<cr>zz")
 
 -- Map MaximizerToggle (szw/vim-maximizer) to leader-m
 nnoremap("<leader>m", ":MaximizerToggle<cr>")
 
--- Rezie split windows to be equal size
+-- Resize split windows to be equal size
 nnoremap("<leader>=", "<C-w>=")
 
 -- Press leader f to format
