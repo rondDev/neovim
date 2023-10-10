@@ -11,6 +11,7 @@ return {
 			"rafamadriz/friendly-snippets",
 			"onsails/lspkind.nvim",
 			"windwp/nvim-autopairs",
+			"windwp/nvim-ts-autotag",
 		},
 		config = function()
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
