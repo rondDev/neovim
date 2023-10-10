@@ -34,6 +34,26 @@ return {
 			-- Configure mason to auto install servers
 			require("mason-lspconfig").setup({
 				automatic_installation = { exclude = { "ocamllsp" } },
+				ensure_installed = {
+					"bashls",
+					"biome",
+					"cssls",
+					"graphql",
+					"html",
+					"jsonls",
+					"lua_ls",
+					"marksman",
+					"prismals",
+					"pyright",
+					"rust_analyzer",
+					"solidity",
+					"sqlls",
+					"svelte",
+					"tailwindcss",
+					"tsserver",
+					"yamlls",
+					"zls",
+				},
 			})
 
 			require("lsp_lines").setup()
