@@ -1,6 +1,6 @@
+require("user.keymaps")
 require("user.lazy")
 require("user.options")
-require("user.keymaps")
 require("user.highlight_yank")
 require("user.format_on_save")
 require("user.toggle_eslint")
