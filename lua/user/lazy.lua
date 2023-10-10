@@ -208,8 +208,8 @@ lazy.setup({
 		end,
 	},
 
-  -- Install incline to have floating filename
-  -- Moved to /plugins/incline.lua
+	-- Install incline to have floating filename
+	-- Moved to /plugins/incline.lua
 
 	-- Focus on what's currently in focus
 	{
@@ -289,9 +289,8 @@ lazy.setup({
 		event = "VeryLazy",
 	},
 
-  -- Install barbar for nice looking tab-bar
-  -- Moved to /plugins/barbar.lua
-
+	-- Install barbar for nice looking tab-bar
+	-- Moved to /plugins/barbar.lua
 
 	{ import = "plugins" },
 })
