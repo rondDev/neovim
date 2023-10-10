@@ -1,3 +1,0 @@
--- local qs = require("quick-scope")
---
--- qs.highlight_on_keys({ "f", "F", "t", "T" })
