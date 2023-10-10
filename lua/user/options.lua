@@ -84,3 +84,5 @@ vim.o.guifont = "JetBrainsMonoNL\\ Nerd\\ Font\\ Mono:h11"
 -- Set theme and background color
 vim.cmd.colorscheme("oxocarbon")
 vim.opt.background = "dark"
+
+vim.opt.cmdheight = 1
