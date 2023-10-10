@@ -80,3 +80,7 @@ vim.g.kitty_navigator_no_mappings = 1
 
 -- GUI stuff
 vim.o.guifont = "JetBrainsMonoNL\\ Nerd\\ Font\\ Mono:h11"
+
+-- Set theme and background color
+vim.cmd.colorscheme("oxocarbon")
+vim.opt.background = "dark"
