@@ -69,7 +69,6 @@ wk.register({
 		name = "code",
 		c = { "<cmd>cclose<cr>zz", "Close quickfix list" },
 		i = { "<cmd>RToggleInlay<cr>", "Toggle Inlay Hints" },
-		l = { vim.diagnostic.setqflist(), "Place all diagnostics into quickfix list" },
 		n = { "<cmd>cnext<cr>zz", "Go to next quickfix list item" },
 		o = { "<cmd>copen<cr>zz", "Open the quickfix list" },
 		p = { "<cmd>cprev<cr>zz", "Previous quickfix list item" },
