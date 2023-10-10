@@ -227,6 +227,7 @@ lazy.setup({
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
+		priority = 51,
 		opts = {
 			-- add any options here
 		},
