@@ -14,6 +14,7 @@ return {
 			"windwp/nvim-ts-autotag",
 		},
 		config = function()
+			--- @diagnostic disable: missing-fields
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
