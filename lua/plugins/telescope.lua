@@ -5,6 +5,11 @@ return {
 		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+				cond = vim.fn.executable("make") == 1,
+			},
 		},
 		config = function()
 			local actions = require("telescope.actions")
@@ -32,9 +37,9 @@ return {
 			pcall(require("telescope").load_extension, "fzf")
 		end,
 	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
-		cond = vim.fn.executable("make") == 1,
-	},
+	-- {
+	-- 	"nvim-telescope/telescope-fzf-native.nvim",
+	-- 	build = "make",
+	-- 	cond = vim.fn.executable("make") == 1,
+	-- },
 }

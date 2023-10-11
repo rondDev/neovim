@@ -1,7 +1,7 @@
 return {
 	{
 		"numToStr/Comment.nvim",
-		event = "BufEnter",
+		event = { "BufEnter" },
 		dependencies = {
 			-- Install context-commentstring to enable jsx commenting is ts/js/tsx/jsx files
 			"JoosepAlviste/nvim-ts-context-commentstring",
