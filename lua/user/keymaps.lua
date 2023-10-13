@@ -84,7 +84,8 @@ wk.register({
 		t = { "<cmd>term<cr>", "[O]pen [T]erminal" },
 	},
 	t = {
-		name = "toggle",
+		name = "toggle/tab",
+		c = { "<cmd>BufferPickDelete<cr>", "[T]ab [C]lose" },
 		s = { "<cmd>ToggleStream<cr>", "[T]oggle [S]tream Mode" },
 		t = { "<cmd>FloatermToggle<cr>", "[T]oggle [T]erminal" },
 		z = { "<cmd>Twilight<cr>", "[T]oggle Twilight ([Z]en)" },

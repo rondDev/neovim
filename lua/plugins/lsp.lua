@@ -56,7 +56,7 @@ return {
 				},
 			})
 
-			require("lsp_lines").setup()
+			-- require("lsp_lines").setup()
 
 			-- Override tsserver diagnostics to filter out specific messages
 			local messages_to_filter = {
@@ -218,7 +218,7 @@ return {
 
 			-- Configure diagostics border
 			vim.diagnostic.config({
-				virtual_text = false,
+				-- virtual_text = false,
 				float = {
 					border = "rounded",
 				},

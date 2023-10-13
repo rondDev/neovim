@@ -293,5 +293,7 @@ lazy.setup({
 	-- Install barbar for nice looking tab-bar
 	-- Moved to /plugins/barbar.lua
 
+	"jbyuki/instant.nvim",
+
 	{ import = "plugins" },
 })
