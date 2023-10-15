@@ -90,3 +90,4 @@ vim.opt.cmdheight = 1
 vim.g.instant_username = "rond"
 vim.opt.autoread = true
 vim.opt.confirm = true
+vim.opt.fileformat = "unix"
