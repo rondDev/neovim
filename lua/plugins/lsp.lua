@@ -8,8 +8,8 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 
-			-- Install null-ls for diagnostics, code actions, and formatting
-			"jose-elias-alvarez/null-ls.nvim",
+			-- Install none-ls for diagnostics, code actions, and formatting
+			"nvimtools/none-ls.nvim",
 
 			-- Install neodev for better nvim configuration and plugin authoring via lsp configurations
 			"folke/neodev.nvim",
@@ -19,7 +19,7 @@ return {
 		},
 		config = function()
 			local null_ls = require("null-ls")
-			local map_lsp_keybinds = require("user.lsp_keymaps").map_lsp_keybinds
+			local map_lsp_keybinds = require("config.lsp_keymaps").map_lsp_keybinds
 
 			-- Use neodev to configure lua_ls in nvim directories - must load before lspconfig
 			require("neodev").setup()
