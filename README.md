@@ -88,7 +88,7 @@ NVIM_APPNAME=rondDev/neovim/ nvim
 
 - [simrat39/symbols-outline.nvim](https://dotfyle.com/plugins/simrat39/symbols-outline.nvim)
 - [onsails/lspkind.nvim](https://dotfyle.com/plugins/onsails/lspkind.nvim)
-- [jose-elias-alvarez/null-ls.nvim](https://dotfyle.com/plugins/jose-elias-alvarez/null-ls.nvim)
+- [nvimtools/none-ls.nvim](https://dotfyle.com/plugins/nvimtools/none-ls.nvim)
 - [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
 - [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
 
