@@ -99,6 +99,7 @@ wk.register({
 		q = { "<cmd>q<cr>", "[W]indow [Q]uit" },
 	},
 	x = { "<cmd>BufferPick<cr>", "Pick buffer" },
+	S = { "<cmd>lua require('spectre').toggle()<cr>", "Global Search and Replace" },
 }, { prefix = "<leader>" })
 
 -- Quit with leader key
