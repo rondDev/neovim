@@ -75,4 +75,11 @@ opt.autoread = true
 opt.confirm = true
 opt.fileformat = "unix"
 opt.showmode = false
-opt.shell = "nu.exe"
+
+if vim.fn.has("macunix") then
+	opt.shell = "nu"
+else
+	opt.shell = "nu.exe"
+end
+
+opt.showtabline = 2

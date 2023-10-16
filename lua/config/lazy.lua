@@ -16,6 +16,10 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 
 require("lazy").setup({
+	defaults = {
+		lazy = true,
+	},
+	install = { colorscheme = { "oxocarbon" } },
 	checker = { enabled = true },
 	performance = {
 		rtp = {
@@ -78,7 +82,7 @@ require("lazy").setup({
 	-- Install nvim-lsp-file-operations for file operations via lsp in the file tree
 	{
 		"antosha417/nvim-lsp-file-operations",
-		lazy = true,
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-neo-tree/neo-tree.nvim",
@@ -88,6 +92,7 @@ require("lazy").setup({
 	-- Install neo-tree for a vscode-like file tree/explorer
 	{
 		"nvim-neo-tree/neo-tree.nvim",
+		cmd = "Neotree",
 		branch = "v3.x",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
@@ -115,7 +120,10 @@ require("lazy").setup({
 	-- Moved to /plugins/indent_blankline.lua
 
 	-- Install vim-surround for managing parenthese, brackets, quotes, etc
-	{ "tpope/vim-surround", event = "VeryLazy" },
+	{
+		"tpope/vim-surround",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+	},
 
 	-- Install maximizer as a depedency to easily toggle max/min a split buffer
 	{
@@ -183,7 +191,10 @@ require("lazy").setup({
 	-- Moved to /plugins/ufo.loa
 
 	-- Worktrees in neovim
-	"ThePrimeagen/git-worktree.nvim",
+	{
+		"ThePrimeagen/git-worktree.nvim",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+	},
 
 	-- Install better_escape to exit insert with "jj"
 	-- Moved to /plugins/better_escape.lua
@@ -250,6 +261,7 @@ require("lazy").setup({
 	-- Prevent neovim inside neovim
 	{
 		"samjwill/nvim-unception",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		lazy = false,
 		init = function()
 			vim.g.unception_block_while_host_edits = true
@@ -262,13 +274,13 @@ require("lazy").setup({
 	-- Focus on what's currently in focus
 	{
 		"folke/twilight.nvim",
-		event = "VeryLazy",
+		cmd = { "Twilight" },
 	},
 
 	-- Debug adapter protocol, still TODO setting this up properly
 	{
 		"mfussenegger/nvim-dap",
-		event = "VeryLazy",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 	},
 
 	-- Makes using the f key trivial
@@ -316,11 +328,12 @@ require("lazy").setup({
 	-- Make LSP errors show under lines (better for smaller windows, but might be less readable)
 	{
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		event = "VeryLazy",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 	},
 
 	-- Install barbar for nice looking tab-bar
 	-- Moved to /plugins/barbar.lua
+	"kdheepak/tabline.nvim",
 
 	{ import = "plugins" },
 })

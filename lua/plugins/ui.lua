@@ -1,4 +1,4 @@
-function config_files()
+local function config_files()
 	vim.cmd("cd ~/.config/nvim")
 	vim.cmd("lua require('telescope.builtin').find_files()")
 end
@@ -10,7 +10,51 @@ return {
 		event = "VimEnter",
 		opts = function()
 			local logo = [[
+                                                /|  /|  ---------------------------
+                                                ||__||  |                         |
+                                               /   O O\__  I have a horny little  |
+                                              /          \   operating system     |
+                                             /      \     \                       |
+                                            /   _    \     \ ----------------------
+                             /    |\____\     \      ||
+                            /     | | | |\____/      ||
+                           /       \| | | |/ |     __||
+                          /  /  \   -------  |_____| ||
+                         /   |   |           |       --|
+                        |   |   |           |_____  --|
+                        |  |_|_|_|          |     \----
+           /\                  |
+          / /\        |        /
+         / /  |       |       |
+     ___/ /   |       |       |
+    |____/    c_c_c_C/ \C_c_c_c
       ]]
+
+			local logo2 = [[
+b.
+  88b
+    888b.
+    88888b
+      888888b.
+    8888P"
+    P" `8.
+          `8.
+          `8
+      ]]
+
+			local logo3 = [[
+,---,---,---,---,---,---,---,---,---,---,---,---,---,-------,
+|ESC| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | + | ' | <-    |
+|---'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-----|
+| ->| | Q | W | E | R | T | Y | U | I | O | P | ] | ^ |     |
+|-----',--',--',--',--',--',--',--',--',--',--',--',--'|    |
+| Caps | A | S | D | F | G | H | J | K | L | \ | [ | * |    |
+|----,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'---'----|
+|    | < | Z | X | C | V | B | N | M | , | . | - |          |
+|----'-,-',--'--,'---'---'---'---'---'---'-,-'---',--,------|
+| ctrl |  | alt |                          |altgr |  | ctrl |
+'------'  '-----'--------------------------'------'  '------'
+]]
 
 			logo = string.rep("\n", 8) .. logo .. "\n\n"
 
@@ -30,7 +74,7 @@ return {
             { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
             { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
             -- { action = Util.telescope.config_files(), desc = " Config", icon = " ", key = "c" },
-            { action = "config_files()", desc = " Config", icon = " ", key = "c" },
+            { action = function() config_files() end, desc = " Config", icon = " ", key = "c" },
             { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
             -- { action = "LazyExtras", desc = " Lazy Extras", icon = " ", key = "x" },
             { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
@@ -104,7 +148,7 @@ return {
 	},
 	{
 		"kevinhwang91/nvim-ufo",
-		event = "BufEnter",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		dependencies = "kevinhwang91/promise-async",
 		config = function()
 			--- @diagnostic disable: missing-fields
@@ -119,7 +163,7 @@ return {
 	{
 		"j-hui/fidget.nvim",
 		tag = "legacy",
-		event = { "BufEnter" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		config = function()
 			-- Turn on LSP, formatting, and linting status and progress information
 			require("fidget").setup({
@@ -132,6 +176,7 @@ return {
 
 	{
 		"b0o/incline.nvim",
+		enabled = false,
 		branch = "main",
 		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		config = function()
@@ -204,7 +249,7 @@ return {
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
 		opts = {},
-		event = "BufEnter",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		config = function()
 			require("ibl").setup({
 				scope = {
@@ -255,7 +300,7 @@ return {
 
 	{
 		"themaxmarchuk/tailwindcss-colors.nvim",
-		event = { "BufEnter" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		config = function()
 			require("tailwindcss-colors").setup()
 		end,
@@ -263,14 +308,21 @@ return {
 
 	{
 		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
+		event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePre" },
 		dependencies = {
-			"ThePrimeagen/harpoon",
-			"f-person/git-blame.nvim",
+			-- "ThePrimeagen/harpoon",
+			{
+				"f-person/git-blame.nvim",
+				event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+			},
 		},
 		config = function()
-			local harpoon = require("harpoon.mark")
+			-- local harpoon = require("harpoon.mark")
 			local git_blame = require("gitblame")
+
+			-- local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+			-- local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+			-- local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "bold,italic" or "bold"
 
 			local function truncate_branch_name(branch)
 				if not branch or branch == "" then
@@ -288,30 +340,22 @@ return {
 				end
 			end
 
-			local function harpoon_component()
-				local total_marks = harpoon.get_length()
-
-				if total_marks == 0 then
-					return ""
-				end
-
-				local current_mark = "—"
-
-				local mark_idx = harpoon.get_current_index()
-				if mark_idx ~= nil then
-					current_mark = tostring(mark_idx)
-				end
-
-				return string.format("󱡅 %s/%d", current_mark, total_marks)
-			end
-
-			local function kitty_component()
-				if vim.g.kitty_layout_is_stack then
-					return " "
-				end
-
-				return ""
-			end
+			-- local function harpoon_component()
+			-- 	local total_marks = harpoon.get_length()
+			--
+			-- 	if total_marks == 0 then
+			-- 		return ""
+			-- 	end
+			--
+			-- 	local current_mark = "—"
+			--
+			-- 	local mark_idx = harpoon.get_current_index()
+			-- 	if mark_idx ~= nil then
+			-- 		current_mark = tostring(mark_idx)
+			-- 	end
+			--
+			-- 	return string.format("󱡅 %s/%d", current_mark, total_marks)
+			-- end
 
 			vim.g.gitblame_display_virtual_text = 0
 
@@ -319,12 +363,17 @@ return {
 				options = {
 					theme = "auto",
 					globalstatus = true,
+					disabled_filetypes = {
+						winbar = {
+							"dashboard",
+						},
+					},
 				},
 				sections = {
 					lualine_b = {
 						{ "branch", icon = "", fmt = truncate_branch_name },
-						harpoon_component,
-						"diff",
+						-- harpoon_component,
+						-- "diff",
 						"diagnostics",
 					},
 					lualine_c = {
@@ -332,15 +381,38 @@ return {
 						{ git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
 					},
 					lualine_x = {
-						kitty_component,
 						"filetype",
 					},
+				},
+				winbar = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {
+						"diagnostics",
+						{ "diff", symbols = { added = "", modified = "", removed = "" } },
+					},
+					lualine_z = { { "filetype", icon_only = true }, "filename" },
+				},
+
+				inactive_winbar = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {
+						"diagnostics",
+						{ "diff", symbols = { added = "", modified = "", removed = "" } },
+					},
+					lualine_z = { { "filetype", icon_only = true }, "filename" },
 				},
 			})
 		end,
 	},
 
 	{
+
 		"rcarriga/nvim-notify",
 		event = { "VeryLazy" },
 		config = function()
@@ -383,7 +455,7 @@ return {
 
 	{
 		"RRethy/vim-illuminate",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("illuminate").configure({
 				under_cursor = false,

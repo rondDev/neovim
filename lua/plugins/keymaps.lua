@@ -25,6 +25,7 @@ return {
 					n = { "<cmd>cnext<cr>zz", "Go to next quickfix list item" },
 					o = { "<cmd>copen<cr>zz", "Open the quickfix list" },
 					p = { "<cmd>cprev<cr>zz", "Previous quickfix list item" },
+					t = { "<cmd>TroubleToggle<cr>", "Toggle trouble (error list)" },
 				},
 				e = { "<cmd>Neotree toggle<cr>", "Toggle Neotree" },
 				g = {

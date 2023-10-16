@@ -3,9 +3,9 @@ local vnoremap = require("config.keymap_utils").vnoremap
 local inoremap = require("config.keymap_utils").inoremap
 local tnoremap = require("config.keymap_utils").tnoremap
 local xnoremap = require("config.keymap_utils").xnoremap
-local harpoon_ui = require("harpoon.ui")
-local harpoon_mark = require("harpoon.mark")
-local illuminate = require("illuminate")
+-- local harpoon_ui = require("harpoon.ui")
+-- local harpoon_mark = require("harpoon.mark")
+-- local illuminate = require("illuminate")
 local utils = require("config.utils")
 
 -- rond migrate keybinds to which-key
@@ -248,15 +248,15 @@ end, { desc = "[S]earch [S]pelling suggestions" })
 nnoremap("<leader>so", ":SymbolsOutline<cr>")
 
 -- Vim Illuminate keybinds
-nnoremap("<leader>]", function()
-	illuminate.goto_next_reference()
-	vim.api.nvim_feedkeys("zz", "n", false)
-end, { desc = "Illuminate: Goto next reference" })
+-- nnoremap("<leader>]", function()
+-- 	illuminate.goto_next_reference()
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end, { desc = "Illuminate: Goto next reference" })
 
-nnoremap("<leader>[", function()
-	illuminate.goto_prev_reference()
-	vim.api.nvim_feedkeys("zz", "n", false)
-end, { desc = "Illuminate: Goto previous reference" })
+-- nnoremap("<leader>[", function()
+-- 	illuminate.goto_prev_reference()
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end, { desc = "Illuminate: Goto previous reference" })
 
 -- Open Copilot panel
 -- nnoremap("<leader>oc", function()

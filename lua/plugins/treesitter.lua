@@ -1,13 +1,20 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = function()
-			require("nvim-treesitter.install").update({ with_sync = true })
-		end,
-		event = { "BufEnter" },
+		build = ":TSUpdate",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+		keys = {
+			"<c-space>",
+			"<c-s>",
+			"<c-backspace>",
+		},
 		dependencies = {
 			-- Additional text objects for treesitter
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+			},
 		},
 		config = function()
 			---@diagnostic disable: missing-fields

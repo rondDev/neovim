@@ -18,7 +18,7 @@ return {
 
 	{
 		"numToStr/Comment.nvim",
-		event = { "BufEnter" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		dependencies = {
 			-- Install context-commentstring to enable jsx commenting is ts/js/tsx/jsx files
 			"JoosepAlviste/nvim-ts-context-commentstring",
@@ -123,5 +123,15 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"folke/trouble.nvim",
+		cmd = { "TroubleToggle" },
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
 	},
 }
