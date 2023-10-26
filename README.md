@@ -7,6 +7,9 @@ it serves as my personal config and takes heavy inspiration from:
 - NvChad
 - dmmulroy's config
 
+![](https://i.rond.cc/api/r299C4P6Nmcu.png)
+![](https://i.rond.cc/api/4VM68Fwagqkn.png)
+
 Below is all the plugins in this config in no particular order.
 They are loosely categorized into the 6 categories below:
 
