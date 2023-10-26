@@ -2,6 +2,15 @@
 
 local M = {}
 
+local is_git_directory = function()
+	local result = vim.fn.system("git rev-parse --is-inside-work-tree")
+	if vim.v.shell_error == 0 and result:find("true") then
+		return true
+	else
+		return false
+	end
+end
+
 M.general = {
 	i = {
 		-- move with C + movement key
@@ -129,6 +138,29 @@ M.general = {
 			"Format document",
 		},
 
+		["<leader>gb"] = { "<cmd>Gitsigns ottgle_current_line_blame<CR>", "Toggle current line blame" },
+		["<leader>gf"] = {
+			function()
+				local cmd = {
+					"sort",
+					"-u",
+					"<(git diff --name-only --cached)",
+					"<(git diff --name-only)",
+					"<(git diff --name-only --diff-filter=U)",
+				}
+
+				if not is_git_directory() then
+					vim.notify(
+						"Current project is not a git directory",
+						vim.log.levels.WARN,
+						{ title = "Telescope Git Files", git_command = cmd }
+					)
+				else
+					require("telescope.builtin").git_files()
+				end
+			end,
+			"Search Git Files",
+		},
 		-- git keys
 		["<leader>gg"] = { "<cmd>Neogit<CR>", "Open Neogit" },
 		["<leader>gv"] = { "<cmd>Neogit kind=vsplit<CR>", "Open Neogit" },
@@ -155,6 +187,80 @@ M.general = {
 		["<leader>wq"] = { "<cmd>q<CR>", "[W]indow [Q]uit" },
 
 		["<leader>z"] = { "<cmd>xa<CR>", "Write quit (xa / wqa)" },
+
+		-- Telescope keybinds --
+		["<leader>?"] = {
+			function()
+				require("telescope.builtin").oldfiles()
+			end,
+			"[?] Find recently opened files",
+		},
+		["<leader>= sb"] = {
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			"[S]earch Open [B]uffers",
+		},
+		["<leader>sf"] = {
+			function()
+				require("telescope.builtin").find_files({ hidden = true })
+			end,
+			"[S]earch [F]iles",
+		},
+		["<leader>sh"] = {
+			function()
+				require("telescope.builtin").help_tags()
+			end,
+			"[S]earch [H]elp",
+		},
+		["<leader>sw"] = {
+			function()
+				require("telescope.builtin").grep_string()
+			end,
+			"[S]earch current [W]ord",
+		},
+		["<leader>sg"] = {
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			"[S]earch by [G]rep",
+		},
+		["<leader>sd"] = {
+			function()
+				require("telescope.builtin").diagnostics()
+			end,
+			"[S]earch [D]iagnostics",
+		},
+
+		["<leader>sc"] = {
+			function()
+				require("telescope.builtin").commands(require("telescope.themes").get_dropdown({
+					previewer = false,
+				}))
+			end,
+			"[S]earch [C]ommands",
+		},
+
+		["<leader>/"] = {
+			function()
+				require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+					previewer = false,
+				}))
+			end,
+			"[/] Fuzzily search in current buffer]",
+		},
+
+		["<leader>ss"] = {
+			function()
+				require("telescope.builtin").spell_suggest(require("telescope.themes").get_dropdown({
+					previewer = false,
+				}))
+			end,
+			"[S]earch [S]pelling suggestions",
+		},
+
+		-- Symbol Outline keybind
+		["<leader>so"] = { "<cmd>SymbolsOutline<CR>" },
 	},
 
 	t = {
@@ -162,6 +268,9 @@ M.general = {
 		["<C-l>"] = { "<C-w>l", "Window right" },
 		["<C-j>"] = { "<C-w>j", "Window down" },
 		["<C-k>"] = { "<C-w>k", "Window up" },
+
+		-- enter normal mode in terminal mode
+		["<esc>"] = { "[[<C-\\><C-n>]]" },
 	},
 
 	v = {
@@ -171,6 +280,10 @@ M.general = {
 		["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
 		["<"] = { "<gv", "Indent line" },
 		[">"] = { ">gv", "Indent line" },
+
+		-- move selected text up/down
+		["<A-j>"] = { ":m '>+1<CR>gv=gv" },
+		["<A-k>"] = { ":m '<-2<CR>gv=gv" },
 	},
 
 	x = {
