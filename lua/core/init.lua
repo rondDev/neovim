@@ -1,10 +1,4 @@
 local opt = vim.opt
-local g = vim.g
-local config = require("core.utils").load_config()
-
-g.nvchad_theme = config.ui.theme
-g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
-g.transparency = config.ui.transparency
 
 -- -- vim options from old config
 
