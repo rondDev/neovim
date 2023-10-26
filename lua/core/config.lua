@@ -1,15 +1,5 @@
 local M = {}
 
-M.ui = {
-	hl_add = {},
-	hl_override = {},
-	changed_themes = {},
-	theme_toggle = { "onedark", "one_light" },
-	theme = "catppucin",
-	transparency = false,
-	lsp_semantic_tokens = false,
-}
-
 M.icons = {
 	misc = {
 		dots = "󰇘",
