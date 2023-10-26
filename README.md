@@ -19,7 +19,18 @@ They are loosely categorized into the 6 categories below:
 
 ## Coding
 
-"hrsh7th/nvim-cmp" - Auto-completion, dependencies listed below - "windwp/nvim-autopairs", - "L3MON4D3/LuaSnip", - "hrsh7th/cmp-nvim-lsp", - "hrsh7th/cmp-nvim-lua", - "hrsh7th/cmp-buffer", - "hrsh7th/cmp-path", - "saadparwaiz1/cmp_luasnip", - "rafamadriz/friendly-snippets", - "onsails/lspkind.nvim", - "windwp/nvim-ts-autotag",
+"hrsh7th/nvim-cmp" - Auto-completion, dependencies listed below
+
+- "windwp/nvim-autopairs",
+- "L3MON4D3/LuaSnip",
+- "hrsh7th/cmp-nvim-lsp",
+- "hrsh7th/cmp-nvim-lua",
+- "hrsh7th/cmp-buffer",
+- "hrsh7th/cmp-path",
+- "saadparwaiz1/cmp_luasnip",
+- "rafamadriz/friendly-snippets",
+- "onsails/lspkind.nvim",
+- "windwp/nvim-ts-autotag",
 
 "echasnovski/mini.comment" - Comment-helper, line and blockwise
 
