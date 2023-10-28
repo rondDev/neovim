@@ -348,24 +348,24 @@ local plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		opts = {},
+		opts = {
+			scope = {
+				enabled = true,
+				show_start = true,
+				show_end = true,
+			},
+			exclude = {
+				filetypes = {
+					"help",
+					"dashboard",
+					"lazy",
+				},
+			},
+		},
 		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		config = function()
-			require("ibl").setup({
-				scope = {
-					enabled = true,
-					show_start = true,
-					show_end = true,
-				},
-				exclude = {
-					filetypes = {
-						"help",
-						"dashboard",
-						"lazy",
-					},
-				},
-			})
-		end,
+		-- config = function()
+		-- 	require("ibl").setup({})
+		-- end,
 	},
 
 	-- notification manager
