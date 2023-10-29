@@ -1,3 +1,5 @@
+local nvim_config = require("core.config")
+
 local plugins = {
 
 	-------------------------------- coding -------------------------------
@@ -381,6 +383,11 @@ local plugins = {
 	{
 		"nvim-lualine/lualine.nvim",
 		event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePre" },
+		cond = function()
+			if nvim_config.line == "lualine" then
+				return true
+			end
+		end,
 		dependencies = {
 			-- "ThePrimeagen/harpoon",
 			{
@@ -390,6 +397,19 @@ local plugins = {
 		},
 		config = function()
 			require("plugins.configs.lualine").setup()
+		end,
+	},
+
+	{
+		"tamton-aquib/staline.nvim",
+		event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePre" },
+		cond = function()
+			if nvim_config.line == "staline" then
+				return true
+			end
+		end,
+		config = function()
+			require("plugins.configs.staline").setup()
 		end,
 	},
 
