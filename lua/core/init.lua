@@ -37,19 +37,19 @@ opt.mouse = "a" -- Enable mouse mode
 opt.ignorecase = true
 opt.smartcase = true
 
-opt.updatetime = 50 -- Decrease updatetime to 200ms
+opt.updatetime = 50                         -- Decrease updatetime to 200ms
 
 opt.completeopt = { "menuone", "noselect" } -- Set completeopt to have a better completion experience
 
-opt.undofile = true -- Enable persistent undo history
+opt.undofile = true                         -- Enable persistent undo history
 
-opt.termguicolors = true -- Enable 24-bit color
+opt.termguicolors = true                    -- Enable 24-bit color
 
-opt.signcolumn = "yes" -- Enable the sign column to prevent the screen from jumping
+opt.signcolumn = "yes"                      -- Enable the sign column to prevent the screen from jumping
 
-opt.clipboard = "unnamed,unnamedplus" -- Enable access to System Clipboard
+opt.clipboard = "unnamed,unnamedplus"       -- Enable access to System Clipboard
 
-opt.cursorline = true -- Enable cursor line highlight
+opt.cursorline = true                       -- Enable cursor line highlight
 
 -- Set fold settings
 -- These options were reccommended by nvim-ufo
@@ -78,108 +78,115 @@ opt.showtabline = 2
 
 -- disable some default providers
 for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
-	vim.g["loaded_" .. provider .. "_provider"] = 0
+  vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
 local autocmd = vim.api.nvim_create_autocmd
 local function augroup(name)
-	return vim.api.nvim_create_augroup("rond_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("rond_" .. name, { clear = true })
 end
 
 -- stolen from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua#L8C1-L11C3
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-	group = augroup("checktime"),
-	command = "checktime",
+  group = augroup("checktime"),
+  command = "checktime",
 })
 
 -- spell checking in gitcommit, markdown and txt
 autocmd({ "FileType" }, {
-	group = augroup("edit_text"),
-	pattern = { "gitcommit", "markdown", "txt" },
-	desc = "Enable spell checking and text wrapping for certain filetypes",
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.spell = true
-	end,
+  group = augroup("edit_text"),
+  pattern = { "gitcommit", "markdown", "txt" },
+  desc = "Enable spell checking and text wrapping for certain filetypes",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
 })
 
 -- format on save
 autocmd("BufWritePre", {
-	group = augroup("format_on_save"),
-	pattern = "*",
-	desc = "Run LSP formatting on a file on save",
-	callback = function()
-		if vim.fn.exists(":Format") > 0 then
-			vim.cmd.Format()
-		end
-	end,
+  group = augroup("format_on_save"),
+  pattern = "*",
+  desc = "Run LSP formatting on a file on save",
+  callback = function()
+    if vim.fn.exists(":Format") > 0 and vim.g.autosave == true then
+      vim.cmd.Format()
+    end
+  end,
 })
+
+-- save without formatting
+vim.api.nvim_create_user_command("Wn", function()
+  vim.g.autosave = false
+  vim.cmd("w")
+  vim.g.autosave = true
+end, {})
 
 -- vertical help
 autocmd("FileType", {
-	group = augroup("vertical_help"),
-	pattern = "help",
-	callback = function()
-		vim.bo.bufhidden = "unload"
-		vim.cmd.wincmd("L")
-		vim.cmd.wincmd("=")
-	end,
+  group = augroup("vertical_help"),
+  pattern = "help",
+  callback = function()
+    vim.bo.bufhidden = "unload"
+    vim.cmd.wincmd("L")
+    vim.cmd.wincmd("=")
+  end,
 })
 
 autocmd("TextYankPost", {
-	group = augroup("highlight_yank"),
-	pattern = "*",
-	desc = "Highlight selection on yank",
-	callback = function()
-		vim.highlight.on_yank({ timeout = 200, visual = true })
-	end,
+  group = augroup("highlight_yank"),
+  pattern = "*",
+  desc = "Highlight selection on yank",
+  callback = function()
+    vim.highlight.on_yank({ timeout = 200, visual = true })
+  end,
 })
 
 -- close some filetypes with <q> -- taken from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua#L49C1-L72C3
 autocmd("FileType", {
-	group = augroup("close_with_q"),
-	pattern = {
-		"PlenaryTestPopup",
-		"help",
-		"lspinfo",
-		"man",
-		"notify",
-		"qf",
-		"query",
-		"spectre_panel",
-		"startuptime",
-		"tsplayground",
-		"neotest-output",
-		"checkhealth",
-		"neotest-summary",
-		"neotest-output-panel",
-	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-	end,
+  group = augroup("close_with_q"),
+  pattern = {
+    "PlenaryTestPopup",
+    "help",
+    "lspinfo",
+    "man",
+    "notify",
+    "qf",
+    "query",
+    "spectre_panel",
+    "startuptime",
+    "tsplayground",
+    "neotest-output",
+    "checkhealth",
+    "neotest-summary",
+    "neotest-output-panel",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
 })
 
 -- create folder if not exist -- taken from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua#L85C1-L94C3
 autocmd({ "BufWritePre" }, {
-	group = augroup("auto_create_dir"),
-	callback = function(event)
-		if event.match:match("^%w%w+://") then
-			return
-		end
-		local file = vim.loop.fs_realpath(event.match) or event.match
-		vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-	end,
+  group = augroup("auto_create_dir"),
+  callback = function(event)
+    if event.match:match("^%w%w+://") then
+      return
+    end
+    local file = vim.loop.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+  end,
 })
 
 -- Autocmd to recompile dwmblocks
 vim.cmd(
-	"autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }"
+  "autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }"
 )
 
 autocmd({ "FileReadPost" }, {
-	group = augroup("set_unix_ff"),
-	callback = function()
-		vim.cmd("set ff=unix")
-	end,
+  group = augroup("set_unix_ff"),
+  callback = function()
+    vim.cmd("set ff=unix")
+  end,
 })
