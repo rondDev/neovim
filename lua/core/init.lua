@@ -76,6 +76,8 @@ opt.showmode = false
 
 opt.showtabline = 2
 
+opt.conceallevel = 3
+
 -- disable some default providers
 for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
   vim.g["loaded_" .. provider .. "_provider"] = 0
@@ -116,7 +118,7 @@ autocmd("BufWritePre", {
 })
 
 -- save without formatting
-vim.api.nvim_create_user_command("Wn", function()
+vim.api.nvim_create_user_command("W", function()
   vim.g.autosave = false
   vim.cmd("w")
   vim.g.autosave = true
