@@ -12,16 +12,7 @@ M.setup = function()
 		if not branch or branch == "" then
 			return ""
 		end
-
-		-- Match the branch name to the specified format
-		local _, _, ticket_number = string.find(branch, "skdillon/sko%-(%d+)%-")
-
-		-- If the branch name matches the format, display sko-{ticket_number}, otherwise display the full branch name
-		if ticket_number then
-			return "sko-" .. ticket_number
-		else
 			return branch
-		end
 	end
 
 	vim.g.gitblame_display_virtual_text = 0
@@ -107,9 +98,9 @@ M.setup = function()
 			lualine_c = {},
 			lualine_x = { "b:gitsigns_status" },
 			lualine_y = {
-				{ "diff", symbols = { added = "", modified = "", removed = "" } },
+				{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
 			},
-			lualine_z = { { "filetype", icon_only = true }, "filename" },
+			lualine_z = { { "filetype", icon_only = true }, { "filename", path = 1 } },
 		},
 
 		inactive_winbar = {
@@ -119,7 +110,8 @@ M.setup = function()
 			lualine_x = { "b:gitsigns_status" },
 			lualine_y = {
 				"diagnostics",
-				{ "diff", symbols = { added = "", modified = "", removed = "" } },
+				{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
+
 			},
 			lualine_z = { { "filetype", icon_only = true }, "filename" },
 		},
@@ -226,7 +218,7 @@ M.setup = function()
 	ins_right({
 		"diff",
 		-- Is it me or the symbol for modified us really weird
-		symbols = { added = " ", modified = "󱓻", removed = " " },
+		symbols = { added = "", modified = "", removed = "" },
 		diff_color = {
 			added = { fg = colors.green },
 			modified = { fg = colors.orange },

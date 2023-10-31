@@ -24,4 +24,19 @@ M.lazy = function(install_path)
   M.echo("Done.")
 end
 
+M.fennel = function(install_path)
+  vim.notify("Bootstrapping hotpot.nvim...", vim.log.levels.INFO)
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    -- You may with to pin a known version tag with `--branch=vX.Y.Z`
+    "--branch=v0.9.6",
+    "https://github.com/rktjmp/hotpot.nvim.git",
+    install_path,
+  })
+
+end
+
 return M

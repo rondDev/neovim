@@ -178,7 +178,7 @@ local plugins = {
 
 	-- color scheme
 	{
-		"nyoom-engineering/oxocarbon.nvim",
+		"rondDev/oxocarbon.nvim",
 		config = function()
 			vim.cmd.colorscheme("oxocarbon")
 		end,
@@ -594,6 +594,11 @@ local plugins = {
 
 	-- essentially just helper functions that are annyoing to write
 	"nvim-lua/plenary.nvim",
+
+
+  -- fennel development 
+  "rktjmp/hotpot.nvim",
+
 
 	--#endregion
 	--

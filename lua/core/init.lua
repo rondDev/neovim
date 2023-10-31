@@ -124,6 +124,17 @@ vim.api.nvim_create_user_command("W", function()
   vim.g.autosave = true
 end, {})
 
+
+-- toggle inlay hints
+vim.api.nvim_create_user_command("RToggleInlay", function()
+	if vim.fn.has("nvim-0.10") == 1 then
+		vim.lsp.inlay_hint(0, nil)
+		require("notify")("Toggled Inlay Hints")
+	else
+		require("notify")("Toggling inlay hints requires at least Neovim 0.10")
+	end
+end, {})
+
 -- vertical help
 autocmd("FileType", {
   group = augroup("vertical_help"),
