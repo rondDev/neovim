@@ -595,10 +595,8 @@ local plugins = {
 	-- essentially just helper functions that are annyoing to write
 	"nvim-lua/plenary.nvim",
 
-
-  -- fennel development 
-  "rktjmp/hotpot.nvim",
-
+	-- fennel development
+	"rktjmp/hotpot.nvim",
 
 	--#endregion
 	--
@@ -635,6 +633,21 @@ local plugins = {
 		},
 		version = "^2", -- Recommended
 		ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+	},
+
+	-- go
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+		end,
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 
 	--#endregion
