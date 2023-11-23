@@ -180,15 +180,18 @@ M.general = {
 
 		["<leader>S"] = { "<cmd>lua require('spectre').toggle()<CR>", "Global Search and Replace" },
 
-    ["<leader>uc"] = { function ()
-      if vim.o.conceallevel == 3 then
-        vim.o.conceallevel = 0
-        vim.notify("Conceal turned off", "info")
-        else
-          vim.o.conceallevel = 3
-          vim.notify("Conceal turned on", "info")
-      end
-    end, "Toggle Conceal" },
+		["<leader>uc"] = {
+			function()
+				if vim.o.conceallevel == 3 then
+					vim.o.conceallevel = 0
+					vim.notify("Conceal turned off", "info")
+				else
+					vim.o.conceallevel = 3
+					vim.notify("Conceal turned on", "info")
+				end
+			end,
+			"Toggle Conceal",
+		},
 
 		["<leader>wv"] = { "<cmd>vsplit<CR>", "Split [W]indow [V]ertically" },
 		["<leader>wr"] = { "<cmd>vsplit<CR>", "Split [W]indow [R]ight" },
