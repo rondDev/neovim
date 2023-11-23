@@ -208,12 +208,13 @@ M.general = {
 			end,
 			"[?] Find recently opened files",
 		},
-		["<leader>= sb"] = {
-			function()
-				require("telescope.builtin").buffers()
-			end,
-			"[S]earch Open [B]uffers",
-		},
+		-- Temporarily commented out, I have no idea if this is actually used or just an oversight on my part
+		-- ["<leader>= sb"] = {
+		-- 	function()
+		-- 		require("telescope.builtin").buffers()
+		-- 	end,
+		-- 	"[S]earch Open [B]uffers",
+		-- },
 		["<leader>sf"] = {
 			function()
 				require("telescope.builtin").find_files({ hidden = true })
