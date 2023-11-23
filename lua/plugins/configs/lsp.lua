@@ -234,7 +234,8 @@ M.setup = function()
 		border = "rounded",
 		sources = {
 			-- formatting
-			formatting.prettier,
+			formatting.biome,
+			-- formatting.prettier,
 			formatting.stylua,
 			-- formatting.ocamlformat,
 
