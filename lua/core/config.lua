@@ -3,6 +3,8 @@ local M = {}
 M.icons = {
 	misc = {
 		dots = "󰇘",
+		leftpad = "",
+		rightpad = "",
 	},
 	dap = {
 		Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
