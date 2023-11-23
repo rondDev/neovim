@@ -12,7 +12,7 @@ M.setup = function()
 		if not branch or branch == "" then
 			return ""
 		end
-			return branch
+		return branch
 	end
 
 	vim.g.gitblame_display_virtual_text = 0
@@ -47,21 +47,11 @@ M.setup = function()
 			return gitdir and #gitdir > 0 and #gitdir < #filepath
 		end,
 	}
-
-	local rond_theme = {
-		normal = {
-			c = { bg = colors.black },
-		},
-
-		insert = {
-			a = { fg = colors.black, bg = colors.magenta },
-		},
-	}
+	local icons = require("core.config").icons
 
 	local config = {
 		options = {
 			theme = "auto",
-			-- theme = rond_theme,
 			globalstatus = true,
 			section_separators = { left = "", right = "" },
 			component_separators = "",
@@ -96,22 +86,27 @@ M.setup = function()
 				{ git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
 			},
 			lualine_c = {},
-			lualine_x = { "b:gitsigns_status" },
+			-- lualine_x = { "b:gitsigns_status" },
 			lualine_y = {
-				{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
+				-- {
+				-- 	"diff",
+				-- 	symbols = { added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed },
+				-- },
 			},
-			lualine_z = { { "filetype", icon_only = true }, { "filename", path = 1 } },
+			lualine_z = { { "filetype", icon_only = true }, "filename" },
 		},
 
 		inactive_winbar = {
 			lualine_a = {},
 			lualine_b = {},
 			lualine_c = {},
-			lualine_x = { "b:gitsigns_status" },
+			lualine_x = {},
 			lualine_y = {
 				"diagnostics",
-				{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
-
+				{
+					"diff",
+					symbols = { added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed },
+				},
 			},
 			lualine_z = { { "filetype", icon_only = true }, "filename" },
 		},
@@ -144,6 +139,7 @@ M.setup = function()
 
 	ins_left({
 		"filename",
+		path = 1,
 		cond = conditions.buffer_not_empty,
 		color = { fg = colors.magenta, gui = "bold" },
 	})
@@ -172,26 +168,84 @@ M.setup = function()
 		end,
 	})
 
+	-- ins_left({
+	-- 	-- Lsp server name .
+	-- 	function()
+	-- 		local msg = "No Active Lsp"
+	-- 		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+	-- 		local clients = vim.lsp.get_clients()
+	-- 		if next(clients) == nil then
+	-- 			return msg
+	-- 		end
+	-- 		for _, client in ipairs(clients) do
+	-- 			local filetypes = client.config.filetypes
+	-- 			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+	-- 				return client.name
+	-- 			end
+	-- 		end
+	-- 		return msg
+	-- 	end,
+	-- 	icon = " LSP:",
+	-- 	-- color = { fg = "#ffffff", gui = "bold" },
+	-- 	seperator = { left = icons.misc.leftpad, right = icons.misc.rightpad },
+	-- })
+	--
+	-- local get_attached_null_ls_sources = function()
+	-- 	local null_ls_sources = require("null-ls").get_sources()
+	-- 	local ret = {}
+	-- 	for _, source in pairs(null_ls_sources) do
+	-- 		if source.filetypes[vim.bo.ft] then
+	-- 			if not vim.tbl_contains(ret, source.name) then
+	-- 				table.insert(ret, source.name)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- 	return ret
+	-- end
+
 	ins_left({
-		-- Lsp server name .
 		function()
-			local msg = "No Active Lsp"
-			local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-			local clients = vim.lsp.get_active_clients()
-			if next(clients) == nil then
-				return msg
-			end
-			for _, client in ipairs(clients) do
-				local filetypes = client.config.filetypes
-				if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-					return client.name
+			local clients = {}
+			local clients_name = ""
+			local the_symbol = "  "
+			local name_max_length = 24
+			local expand_null_ls = false
+
+			for _, client in pairs(vim.lsp.get_clients()) do -- Deprecated?
+				-- for _, client in pairs(vim.lsp.get_active_clients()) do -- Deprecated?
+				if expand_null_ls then
+					if client.name == "null-ls" then
+						for _, source in pairs(get_attached_null_ls_sources()) do
+							clients[#clients + 1] = source .. ""
+						end
+					else
+						clients[#clients + 1] = client.name
+					end
+				else
+					clients[#clients + 1] = client.name
 				end
 			end
-			return msg
+			clients_name = table.concat(clients, ", ")
+
+			-- NOTE: Only show XX characters if the "clients_name" is too long
+			if name_max_length <= 0 then
+				return the_symbol .. clients_name
+			else
+				local clients_length = string.len(clients_name)
+				local clients_truncated_name = ""
+
+				if clients_length >= name_max_length then
+					clients_truncated_name = string.sub(clients_name, 1, name_max_length)
+					clients_truncated_name = #clients .. " :( " .. clients_truncated_name .. "... )"
+					return the_symbol .. clients_truncated_name
+				elseif clients_length == 0 then
+					-- return the_symbol .. #clients .. ":(" .. "LSP" .. ")"
+					return the_symbol .. "No Active LSP"
+				else
+					return the_symbol .. #clients .. ": ( " .. clients_name .. " )"
+				end
+			end
 		end,
-		icon = " LSP:",
-		-- color = { fg = "#ffffff", gui = "bold" },
-		seperator = { left = "", right = "" },
 	})
 
 	-- Add components to right sections
@@ -218,7 +272,11 @@ M.setup = function()
 	ins_right({
 		"diff",
 		-- Is it me or the symbol for modified us really weird
-		symbols = { added = "", modified = "", removed = "" },
+		symbols = {
+			added = icons.git.added,
+			modified = icons.git.modified,
+			removed = icons.git.removed,
+		},
 		diff_color = {
 			added = { fg = colors.green },
 			modified = { fg = colors.orange },
