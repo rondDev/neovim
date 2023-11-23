@@ -111,12 +111,17 @@ local plugins = {
 	-- NOTE: this might be swapped out with tpope's vim-surround, that remains to be seen
 	--
 	-- manage parentheses, brackets, quotes etc.
+	-- {
+	-- 	"echasnovski/mini.surround",
+	-- 	version = false,
+	-- 	config = function()
+	-- 		require("mini.surround").setup()
+	-- 	end,
+	-- },
+
+	--
 	{
-		"echasnovski/mini.surround",
-		version = false,
-		config = function()
-			require("mini.surround").setup()
-		end,
+		"tpope/vim-surround",
 	},
 
 	-- Search and replace
