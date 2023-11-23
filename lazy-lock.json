@@ -16,4 +16,6 @@
   "gist.nvim": { "branch": "main", "commit": "92b13e486dd9fd083750450e0d262fcc68a62b91" },
   "git-blame.nvim": { "branch": "master", "commit": "1792125237260dc2a03ba57d31c39179e6049f07" },
   "gitsigns.nvim": { "branch": "main", "commit": "af0f583cd35286dd6f0e3ed52622728703237e50" },
+  "go.nvim": { "branch": "master", "commit": "7852fd8e1c5ddd0983deeadc9de80742a559fa14" },
+  "guihua.lua": { "branch": "master", "commit": "9c3e3ba03ac65782e950bd21434bbbfe8dfb6f50" },
   "haskell-tools.nvim": { "branch": "master", "commit": "92e097c6832405fb64e4c44a7ce8bebe7836cae6" },
