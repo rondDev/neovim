@@ -180,6 +180,9 @@ M.general = {
 
 		["<leader>S"] = { "<cmd>lua require('spectre').toggle()<CR>", "Global Search and Replace" },
 
+		["<leader>tc"] = { "<cmd>BufferPickDelete<CR>", "[T]ab [C]lose" },
+		["<leader>tp"] = { "<cmd>BufferPick<CR>", "[T]ab [P]ick" },
+
 		["<leader>uc"] = {
 			function()
 				if vim.o.conceallevel == 3 then
@@ -215,6 +218,12 @@ M.general = {
 		-- 	end,
 		-- 	"[S]earch Open [B]uffers",
 		-- },
+		["<leader>sb"] = {
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			"[S]earch [B]uffers",
+		},
 		["<leader>sf"] = {
 			function()
 				require("telescope.builtin").find_files({ hidden = true })
