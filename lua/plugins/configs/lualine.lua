@@ -208,7 +208,7 @@ M.setup = function()
 			local clients = {}
 			local clients_name = ""
 			local the_symbol = "  "
-			local name_max_length = 24
+			local name_max_length = 48
 			local expand_null_ls = false
 
 			for _, client in pairs(vim.lsp.get_clients()) do -- Deprecated?
