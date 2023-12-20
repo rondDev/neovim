@@ -22,10 +22,14 @@ M.general = {
 
 	n = {
 		-- move between windows
-		["<C-h>"] = { "<C-w>h", "Window left" },
-		["<C-l>"] = { "<C-w>l", "Window right" },
-		["<C-j>"] = { "<C-w>j", "Window down" },
-		["<C-k>"] = { "<C-w>k", "Window up" },
+		-- ["<C-h>"] = { "<C-w>h", "Window left" },
+		-- ["<C-l>"] = { "<C-w>l", "Window right" },
+		-- ["<C-j>"] = { "<C-w>j", "Window down" },
+		-- ["<C-k>"] = { "<C-w>k", "Window up" },
+		["<C-h>"] = { "<cmd>NvimTmuxNavigateLeft<CR>", "Move left" },
+		["<C-l>"] = { "<cmd>NvimTmuxNavigateRight<CR>", "Move right" },
+		["<C-j>"] = { "<cmd>NvimTmuxNavigateDown<CR>", "Move down" },
+		["<C-k>"] = { "<cmd>NvimTmuxNavigateUp<CR>", "Move up" },
 
 		-- move and center
 		["{"] = { "{zz", "{zz" },

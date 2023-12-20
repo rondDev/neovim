@@ -211,8 +211,21 @@ M.setup = function()
 			local name_max_length = 48
 			local expand_null_ls = false
 
-			for _, client in pairs(vim.lsp.get_clients()) do -- Deprecated?
-				-- for _, client in pairs(vim.lsp.get_active_clients()) do -- Deprecated?
+			local get_attached_null_ls_sources = function()
+				local null_ls_sources = require("null-ls").get_sources()
+				local ret = {}
+				for _, source in pairs(null_ls_sources) do
+					if source.filetypes[vim.bo.ft] then
+						if not vim.tbl_contains(ret, source.name) then
+							table.insert(ret, source.name)
+						end
+					end
+				end
+				return ret
+			end
+
+			-- for _, client in pairs(vim.lsp.get_clients()) do -- Deprecated?
+			for _, client in pairs(vim.lsp.get_active_clients()) do -- Deprecated?
 				if expand_null_ls then
 					if client.name == "null-ls" then
 						for _, source in pairs(get_attached_null_ls_sources()) do
@@ -228,7 +241,7 @@ M.setup = function()
 			clients_name = table.concat(clients, ", ")
 
 			-- NOTE: Only show XX characters if the "clients_name" is too long
-			if name_max_length <= 0 then
+			if name_max_length <= 100 then
 				return the_symbol .. clients_name
 			else
 				local clients_length = string.len(clients_name)

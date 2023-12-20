@@ -610,6 +610,13 @@ local plugins = {
 	-- fennel development
 	"rktjmp/hotpot.nvim",
 
+	{
+		"alexghergh/nvim-tmux-navigation",
+		init = function()
+			require("nvim-tmux-navigation")
+		end,
+	},
+
 	--#endregion
 	--
 
