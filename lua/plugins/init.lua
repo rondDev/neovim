@@ -205,15 +205,19 @@ local plugins = {
 	},
 
 	-- nice looking todos
+	-- TODO:
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("todo-comments").setup()
+		end,
 	},
 
 	-- pretty diagnostics
 	{
 		"folke/trouble.nvim",
-		cmd = { "TroubleToggle" },
+		cmd = { "TroubleToggle", "TodoTrouble" },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
@@ -465,6 +469,19 @@ local plugins = {
 		},
 	},
 
+	{
+		"utilyre/barbecue.nvim",
+		name = "barbecue",
+		version = "*",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		opts = {
+			-- configurations go here
+		},
+	},
+
 	--#endregion
 
 	------------------------------- LSP -----------------------------------
@@ -602,6 +619,47 @@ local plugins = {
 			-- todo
 			defaults = {},
 		},
+		config = function()
+			require("which-key").register({
+				b = {
+					name = "Buffer",
+				},
+				c = {
+					name = "Code",
+				},
+				g = {
+					name = "Git",
+				},
+				n = {
+					name = "Noh",
+				},
+				o = {
+					name = "Open",
+				},
+				r = {
+					name = "Rename/Rotate",
+				},
+				s = {
+					name = "Search",
+				},
+				t = {
+					name = "Tab/Trouble",
+				},
+				u = {
+					name = "Toggle conceal",
+				},
+				w = {
+					name = "Window/Winbar",
+				},
+				["["] = {
+					name = "Goto previous",
+				},
+				["]"] = {
+					name = "Goto next",
+				},
+			}, { prefix = "<leader>" })
+			-- code
+		end,
 	},
 
 	-- essentially just helper functions that are annyoing to write
@@ -650,7 +708,7 @@ local plugins = {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-		version = "^2", -- Recommended
+		version = "^3", -- Recommended
 		ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
 	},
 
