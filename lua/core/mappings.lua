@@ -185,6 +185,8 @@ M.general = {
 		["<leader>S"] = { "<cmd>lua require('spectre').toggle()<CR>", "Global Search and Replace" },
 
 		["<leader>tc"] = { "<cmd>BufferPickDelete<CR>", "[T]ab [C]lose" },
+		["<leader>tl"] = { "<cmd>TodoTrouble<CR>", "[T]odo [L]ist (Trouble)" },
+		["<leader>tt"] = { "<cmd>TodoTelescope<CR>", "[T]odo [T]elescope" },
 		["<leader>tp"] = { "<cmd>BufferPick<CR>", "[T]ab [P]ick" },
 
 		["<leader>uc"] = {
@@ -205,6 +207,18 @@ M.general = {
 		["<leader>wh"] = { "<cmd>split<CR>", "Split [W]indow [H]orizontally" },
 		["<leader>wb"] = { "<cmd>split<CR>", "Split [W]indow [B]ottom" },
 		["<leader>wq"] = { "<cmd>q<CR>", "[W]indow [Q]uit" },
+		["<leader>we"] = {
+			function()
+				require("lualine").hide({ place = { "winbar" }, unhide = true })
+			end,
+			"Enable Lualine Winbar",
+		},
+		["<leader>wd"] = {
+			function()
+				require("lualine").hide({ place = { "winbar" }, unhide = false })
+			end,
+			"Enable Lualine Winbar",
+		},
 
 		["<leader>z"] = { "<cmd>xa<CR>", "Write quit (xa / wqa)" },
 
