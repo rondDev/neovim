@@ -50,19 +50,19 @@ local opts = {
 	},
 	config = {
 		header = vim.split(logo, "\n"),
-          -- stylua: ignore
-          center = {
-            { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
-            { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
-            { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
-            { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
-            -- { action = Util.telescope.config_files(), desc = " Config", icon = " ", key = "c" },
-            { action = function() config_files() end, desc = " Config", icon = " ", key = "c" },
-            { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
-            -- { action = "LazyExtras", desc = " Lazy Extras", icon = " ", key = "x" },
-            { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
-            { action = "qa", desc = " Quit", icon = " ", key = "q" },
-          },
+    -- stylua: ignore
+    center = {
+      { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
+      { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
+      { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
+      { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
+      -- { action = Util.telescope.config_files(), desc = " Config", icon = " ", key = "c" },
+      { action = function() config_files() end, desc = " Config", icon = " ", key = "c" },
+      { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
+      -- { action = "LazyExtras", desc = " Lazy Extras", icon = " ", key = "x" },
+      { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
+      { action = "qa", desc = " Quit", icon = " ", key = "q" },
+    },
 		footer = function()
 			local stats = require("lazy").stats()
 			local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)

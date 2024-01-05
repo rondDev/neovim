@@ -37,7 +37,7 @@ opt.mouse = "a" -- Enable mouse mode
 opt.ignorecase = true
 opt.smartcase = true
 
-opt.updatetime = 50 -- Decrease updatetime to 200ms
+opt.updatetime = 50 -- Decrease updatetime to 50ms
 
 opt.completeopt = { "menuone", "noselect" } -- Set completeopt to have a better completion experience
 
