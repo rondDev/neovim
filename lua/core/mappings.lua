@@ -37,6 +37,14 @@ M.general = {
 		["%"] = { "%zz", "%zz" },
 		["*"] = { "*zz", "*zz" },
 		["#"] = { "#zz", "#zz" },
+
+		["<leader><space>"] = {
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			"[ ] Find opened buffers",
+		},
+
 		["<leader>[d"] = {
 			function()
 				vim.diagnostic.goto_prev({})
