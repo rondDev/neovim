@@ -502,6 +502,8 @@ local plugins = {
 			-- Install neodev for better nvim configuration and plugin authoring via lsp configurations
 			"folke/neodev.nvim",
 
+			"nvim-lua/plenary.nvim",
+
 			-- Progress/Status update for LSP
 			{
 				"j-hui/fidget.nvim",
@@ -662,6 +664,33 @@ local plugins = {
 		end,
 	},
 
+	{
+		"nvim-orgmode/orgmode",
+		dependencies = {
+			{ "nvim-treesitter/nvim-treesitter", lazy = true },
+		},
+		event = "VeryLazy",
+		config = function()
+			-- Load treesitter grammar for org
+			require("orgmode").setup_ts_grammar()
+
+			-- Setup treesitter
+			require("nvim-treesitter.configs").setup({
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = { "org" },
+				},
+				ensure_installed = { "org" },
+			})
+
+			-- Setup orgmode
+			require("orgmode").setup({
+				org_agenda_files = "~/orgfiles/**/*",
+				org_default_notes_file = "~/orgfiles/refile.org",
+			})
+		end,
+	},
+
 	-- essentially just helper functions that are annyoing to write
 	"nvim-lua/plenary.nvim",
 
@@ -672,6 +701,13 @@ local plugins = {
 		"alexghergh/nvim-tmux-navigation",
 		init = function()
 			require("nvim-tmux-navigation")
+		end,
+	},
+
+	{
+		"xiyaowong/telescope-emoji.nvim",
+		config = function()
+			require("telescope").load_extension("emoji")
 		end,
 	},
 
