@@ -150,7 +150,7 @@ local plugins = {
 
 	{
 		"folke/flash.nvim",
-		event = "VeryLazy",
+		event = "BufReadPost",
 		opts = {
 			modes = {
 				char = {
@@ -209,6 +209,7 @@ local plugins = {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		event = { "BufReadPost" },
 		config = function()
 			require("todo-comments").setup()
 		end,
@@ -217,7 +218,7 @@ local plugins = {
 	-- pretty diagnostics
 	{
 		"folke/trouble.nvim",
-		cmd = { "TroubleToggle", "TodoTrouble" },
+		event = { "BufReadPost" },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
@@ -472,6 +473,8 @@ local plugins = {
 	{
 		"utilyre/barbecue.nvim",
 		name = "barbecue",
+		-- event = { "BufReadPre" },
+		keys = { "<leader>wd" },
 		version = "*",
 		dependencies = {
 			"SmiteshP/nvim-navic",
@@ -655,7 +658,7 @@ local plugins = {
 					name = "Search",
 				},
 				t = {
-					name = "Tab/Trouble",
+					name = "Tab/Trouble/Toggle",
 				},
 				u = {
 					name = "Toggle conceal",
@@ -705,7 +708,10 @@ local plugins = {
 	"nvim-lua/plenary.nvim",
 
 	-- fennel development
-	"rktjmp/hotpot.nvim",
+	{
+		"rktjmp/hotpot.nvim",
+		event = "VeryLazy",
+	},
 
 	{
 		"alexghergh/nvim-tmux-navigation",
@@ -716,6 +722,7 @@ local plugins = {
 
 	{
 		"xiyaowong/telescope-emoji.nvim",
+		cmd = { "Telescope" },
 		config = function()
 			require("telescope").load_extension("emoji")
 		end,
