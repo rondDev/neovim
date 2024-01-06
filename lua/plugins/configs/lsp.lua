@@ -52,9 +52,6 @@ return {
           settings = {
             Lua = {
               workspace = {
-                library = {
-                  [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                },
                 checkThirdParty = false,
                 telemetry = false,
               },
