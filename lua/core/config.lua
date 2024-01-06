@@ -70,6 +70,7 @@ M.icons = {
 -- M.line = "staline"
 M.line = "lualine"
 
+-- NOTE: very unsure if I actually need this
 M.lazy = require("plugins.configs.lazy")
 
 M.mappings = require("core.mappings")
