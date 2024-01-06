@@ -482,6 +482,16 @@ local plugins = {
 		},
 	},
 
+	{
+		"sidebar-nvim/sidebar.nvim",
+		event = { "VeryLazy" },
+		config = function()
+			require("sidebar-nvim").setup({
+				disable_default_keybindings = 1,
+			})
+		end,
+	},
+
 	--#endregion
 
 	------------------------------- LSP -----------------------------------

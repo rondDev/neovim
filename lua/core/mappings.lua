@@ -194,6 +194,12 @@ M.general = {
 
 		["<leader>tc"] = { "<cmd>BufferPickDelete<CR>", "[T]ab [C]lose" },
 		["<leader>tl"] = { "<cmd>TodoTrouble<CR>", "[T]odo [L]ist (Trouble)" },
+		["<leader>ts"] = {
+			function()
+				require("sidebar-nvim").toggle()
+			end,
+			"[T]oggle [S]idebar",
+		},
 		["<leader>tt"] = { "<cmd>TodoTelescope<CR>", "[T]odo [T]elescope" },
 		["<leader>tp"] = { "<cmd>BufferPick<CR>", "[T]ab [P]ick" },
 
