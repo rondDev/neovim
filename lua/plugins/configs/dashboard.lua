@@ -88,4 +88,12 @@ if vim.o.filetype == "lazy" then
 	})
 end
 
-return opts
+return {
+	{
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		opts = function()
+			return opts
+		end,
+	},
+}

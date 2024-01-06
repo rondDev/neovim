@@ -21,4 +21,27 @@ local options = {
 
 -- Enable telescope fzf native, if installed
 pcall(require("telescope").load_extension, "fzf")
-return options
+
+return {
+
+	{
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		cmd = "Telescope",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				cmd = "Telescope",
+				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+				cond = vim.fn.executable("cmake") == 1,
+			},
+		},
+		opts = function()
+			return options
+		end,
+		config = function(_, opts)
+			require("telescope").setup(opts)
+		end,
+	},
+}

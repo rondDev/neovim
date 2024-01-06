@@ -55,7 +55,7 @@ M.icons = {
 		Package = " ",
 		Property = " ",
 		Reference = " ",
-		Snippet = " ",
+		Snippet = " ",
 		String = " ",
 		Struct = "󰆼 ",
 		TabNine = "󰏚 ",
@@ -71,7 +71,7 @@ M.icons = {
 M.line = "lualine"
 
 -- NOTE: very unsure if I actually need this
-M.lazy = require("plugins.configs.lazy")
+-- M.lazy = require("plugins.configs.lazy")
 
 M.mappings = require("core.mappings")
 

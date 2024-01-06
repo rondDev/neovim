@@ -1,806 +1,714 @@
-local nvim_config = require("core.config")
-
 local plugins = {
 
-	--   ╭───────────────────────────────────────────────────────────────────────╮
-	--   │ ------------------------------ coding ------------------------------- │
-	--   │      Section for general improvements for code flow                   │
-	--   │ --------------------------------------------------------------------- │
-	--   ╰───────────────────────────────────────────────────────────────────────╯
-	--#region coding
+  --   ╭───────────────────────────────────────────────────────────────────────╮
+  --   │ ------------------------------ coding ------------------------------- │
+  --   │      Section for general improvements for code flow                   │
+  --   │ --------------------------------------------------------------------- │
+  --   ╰───────────────────────────────────────────────────────────────────────╯
+  --#region coding
 
-	-- autocomplete
-	{
-		"hrsh7th/nvim-cmp",
-		event = { "InsertEnter" },
-		dependencies = {
-			{
-				"windwp/nvim-autopairs",
-				config = function()
-					require("nvim-autopairs").setup()
-					local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-					require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-				end,
-			},
-			{
-				"L3MON4D3/LuaSnip",
-				dependencies = "rafamadriz/friendly-snippets",
-				opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-				config = function(_, opts)
-					require("plugins.configs.luasnip").setup(opts)
-				end,
-			},
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			"onsails/lspkind.nvim",
-			"windwp/nvim-ts-autotag",
-		},
-		opts = function()
-			return require("plugins.configs.cmp")
-		end,
-		config = function(_, opts)
-			require("cmp").setup(opts)
-		end,
-	},
+  -- autocomplete
 
-	-- easy commenting
-	{
-		"echasnovski/mini.comment",
-		version = false,
-		config = function()
-			require("mini.comment").setup()
-		end,
-	},
+  -- easy commenting
+  {
+    "echasnovski/mini.comment",
+    version = false,
+    config = function()
+      require("mini.comment").setup()
+    end,
+  },
 
-	-- escape with jj and jk
-	{
-		"max397574/better-escape.nvim",
-		event = { "InsertEnter" },
-		config = function()
-			require("better_escape").setup({
-				mapping = { "jk", "jj" }, -- a table with mappings to use
-				timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-				clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-				keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
-			})
-		end,
-	},
+  -- escape with jj and jk
+  {
+    "max397574/better-escape.nvim",
+    event = { "InsertEnter" },
+    config = function()
+      require("better_escape").setup({
+        mapping = { "jk", "jj" }, -- a table with mappings to use
+        timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+        keys = "<Esc>",         -- keys used for escaping, if it is a function will use the result everytime
+      })
+    end,
+  },
 
-	-- Install nvim-lsp-file-operations for file operations via lsp in the file tree
-	{
-		"antosha417/nvim-lsp-file-operations",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-neo-tree/neo-tree.nvim",
-		},
-	},
+  -- Install nvim-lsp-file-operations for file operations via lsp in the file tree
+  {
+    "antosha417/nvim-lsp-file-operations",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-neo-tree/neo-tree.nvim",
+    },
+  },
 
-	-- Install neo-tree for a vscode-like file tree/explorer
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		cmd = "Neotree",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-			{
-				"s1n7ax/nvim-window-picker",
-				version = "2.*",
-			},
-		},
-	},
+  -- Install neo-tree for a vscode-like file tree/explorer
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+      {
+        "s1n7ax/nvim-window-picker",
+        version = "2.*",
+      },
+    },
+  },
 
-	-- manage parentheses, brackets, quotes etc.
-	{
-		"tpope/vim-surround",
-	},
+  -- manage parentheses, brackets, quotes etc.
+  {
+    "tpope/vim-surround",
+  },
 
-	-- Search and replace
-	{
-		"nvim-pack/nvim-spectre",
-		keys = "S",
-		cmd = "Spectre",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
+  -- Search and replace
+  {
+    "nvim-pack/nvim-spectre",
+    keys = "S",
+    cmd = "Spectre",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
 
-	-- buffer-like file manager
-	{
-		"stevearc/oil.nvim",
-		config = function()
-			require("oil").setup({
-				keymaps = {
-					["g?"] = "actions.show_help",
-					["<CR>"] = "actions.select",
-					["<C-s>"] = "actions.select_vsplit",
-					-- ["<C-h>"] = "actions.select_split", -- this is used to navigate left
-					["<C-t>"] = "actions.select_tab",
-					["<C-p>"] = "actions.preview",
-					["<C-c>"] = "actions.close",
-					["<C-l>"] = "actions.refresh",
-					["-"] = "actions.parent",
-					["_"] = "actions.open_cwd",
-					["`"] = "actions.cd",
-					["~"] = "actions.tcd",
-					["gs"] = "actions.change_sort",
-					["gx"] = "actions.open_external",
-					["g."] = "actions.toggle_hidden",
-				},
-				use_default_keymaps = false,
-			})
-		end,
-	},
+  -- buffer-like file manager
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup({
+        keymaps = {
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<C-s>"] = "actions.select_vsplit",
+          -- ["<C-h>"] = "actions.select_split", -- this is used to navigate left
+          ["<C-t>"] = "actions.select_tab",
+          ["<C-p>"] = "actions.preview",
+          ["<C-c>"] = "actions.close",
+          ["<C-l>"] = "actions.refresh",
+          ["-"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["`"] = "actions.cd",
+          ["~"] = "actions.tcd",
+          ["gs"] = "actions.change_sort",
+          ["gx"] = "actions.open_external",
+          ["g."] = "actions.toggle_hidden",
+        },
+        use_default_keymaps = false,
+      })
+    end,
+  },
 
-	-- almost like magit inside neovim
-	{
-		"NeogitOrg/neogit",
-		cmd = { "Neogit" },
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"sindrets/diffview.nvim",
-			"ibhagwan/fzf-lua",
-		},
-		config = true,
-	},
+  -- almost like magit inside neovim
+  {
+    "NeogitOrg/neogit",
+    cmd = { "Neogit" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "sindrets/diffview.nvim",
+      "ibhagwan/fzf-lua",
+    },
+    config = true,
+  },
 
-	{
-		"folke/flash.nvim",
-		event = "BufReadPost",
-		opts = {
-			modes = {
-				char = {
-					jump_labels = true,
-				},
-			},
-		},
-		keys = {
-			-- {
-			-- 	"f",
-			-- 	mode = { "n", "x", "o" },
-			-- 	function()
-			-- 		require("flash").jump()
-			-- 	end,
-			-- 	desc = "Flash",
-			-- },
-			-- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			-- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-			-- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-		},
-	},
+  {
+    "folke/flash.nvim",
+    event = "BufReadPost",
+    opts = {
+      modes = {
+        char = {
+          jump_labels = true,
+        },
+      },
+    },
+    keys = {
+      -- {
+      -- 	"f",
+      -- 	mode = { "n", "x", "o" },
+      -- 	function()
+      -- 		require("flash").jump()
+      -- 	end,
+      -- 	desc = "Flash",
+      -- },
+      -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
+      -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
 
-	--#endregion
+  --#endregion
 
-	--   ╭───────────────────────────────────────────────────────────────────────╮
-	--   │ ------------------------------ ui ----------------------------------- │
-	--   │      Section for general improvements in the ui                       │
-	--   │ --------------------------------------------------------------------- │
-	--   ╰───────────────────────────────────────────────────────────────────────╯
-	--#region UI
+  --   ╭───────────────────────────────────────────────────────────────────────╮
+  --   │ ------------------------------ ui ----------------------------------- │
+  --   │      Section for general improvements in the ui                       │
+  --   │ --------------------------------------------------------------------- │
+  --   ╰───────────────────────────────────────────────────────────────────────╯
+  --#region UI
 
-	-- color scheme
-	{
-		"rondDev/oxocarbon.nvim",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("oxocarbon")
-		end,
-	},
 
-	-- improves the default vim.ui interfaces
-	{
-		"stevearc/dressing.nvim",
-		config = function()
-			require("dressing").setup()
-		end,
-	},
+  {
+    -- TODO: create proper config
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      routes = {
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "%d+L, %d+B" },
+              { find = "; after #%d+" },
+              { find = "; before #%d+" },
+            },
+          },
+          view = "mini",
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = true,
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      { "<S-Enter>",   function() require("noice").redirect(vim.fn.getcmdline()) end,                 mode = "c",                 desc = "Redirect Cmdline" },
+      { "<leader>snl", function() require("noice").cmd("last") end,                                   desc = "Noice Last Message" },
+      { "<leader>snh", function() require("noice").cmd("history") end,                                desc = "Noice History" },
+      { "<leader>sna", function() require("noice").cmd("all") end,                                    desc = "Noice All" },
+      { "<leader>snd", function() require("noice").cmd("dismiss") end,                                desc = "Dismiss All" },
+      { "<c-f>",       function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end,  silent = true,              expr = true,              desc = "Scroll forward",  mode = { "i", "n", "s" } },
+      { "<c-b>",       function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true,              expr = true,              desc = "Scroll backward", mode = { "i", "n", "s" } },
+    },
+  },
 
-	-- nice looking todos
-	-- TODO:
-	{
-		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		event = { "BufReadPost" },
-		config = function()
-			require("todo-comments").setup()
-		end,
-	},
 
-	-- pretty diagnostics
-	{
-		"folke/trouble.nvim",
-		event = { "BufReadPost" },
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-	},
+  -- color scheme
+  {
+    "rondDev/oxocarbon.nvim",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("oxocarbon")
+    end,
+  },
 
-	-- nice icons everywhere
-	{
-		"nvim-tree/nvim-web-devicons",
-		config = function()
-			require("nvim-web-devicons").setup()
-		end,
-	},
+  -- improves the default vim.ui interfaces
+  {
+    "stevearc/dressing.nvim",
+    config = function()
+      require("dressing").setup()
+    end,
+  },
 
-	-- nice search ui
-	{
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
-		cmd = "Telescope",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				cmd = "Telescope",
-				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-				cond = vim.fn.executable("cmake") == 1,
-			},
-		},
-		opts = function()
-			return require("plugins.configs.telescope")
-		end,
-		config = function(_, opts)
-			require("telescope").setup(opts)
-		end,
-	},
+  -- nice looking todos
+  -- TODO:
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost" },
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
 
-	-- show symbols in a nice list
-	{
-		"simrat39/symbols-outline.nvim",
-		cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
-		opts = function()
-			return require("plugins.configs.symbols_outline")
-		end,
-		config = function(_, opts)
-			require("symbols-outline").setup(opts)
-		end,
-	},
+  -- pretty diagnostics
+  {
+    "folke/trouble.nvim",
+    event = { "BufReadPost" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
-	-- pretty dashboard
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		opts = function()
-			return require("plugins.configs.dashboard")
-		end,
-	},
+  -- nice icons everywhere
+  {
+    "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("nvim-web-devicons").setup()
+    end,
+  },
 
-	-- ultra folds in neovim
-	{
-		"kevinhwang91/nvim-ufo",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		dependencies = "kevinhwang91/promise-async",
-		config = function()
-			--- @diagnostic disable: missing-fields
-			--- @diagnostic disable: unused-local
-			require("ufo").setup({
-				provider_selector = function(_bufnr, _filetype, _buftype)
-					return { "treesitter", "indent" }
-				end,
-			})
-		end,
-	},
+  -- nice search ui
 
-	-- hex color thing
-	{
-		"norcalli/nvim-colorizer.lua",
-		event = { "InsertEnter" },
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
+  -- show symbols in a nice list
 
-	-- tailwindcss color thing
-	{
-		"themaxmarchuk/tailwindcss-colors.nvim",
-		event = { "InsertEnter" },
-		config = function()
-			require("tailwindcss-colors").setup()
-		end,
-	},
+  -- pretty dashboard
 
-	-- highlight all occurances of the word under your cursor similar to vim-illuminate
-	{
-		"echasnovski/mini.cursorword",
-		version = false,
-		config = function()
-			require("mini.cursorword").setup()
-		end,
-	},
+  -- ultra folds in neovim
+  {
+    "kevinhwang91/nvim-ufo",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    dependencies = "kevinhwang91/promise-async",
+    config = function()
+      --- @diagnostic disable: missing-fields
+      --- @diagnostic disable: unused-local
+      require("ufo").setup({
+        provider_selector = function(_bufnr, _filetype, _buftype)
+          return { "treesitter", "indent" }
+        end,
+      })
+    end,
+  },
 
-	-- visualize indents (with pretty animations)
-	{
-		"echasnovski/mini.indentscope",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		opts = {
-			-- symbol = "▏",
-			symbol = "│",
-			options = { try_as_border = true },
-		},
-		init = function()
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = {
-					"help",
-					"alpha",
-					"dashboard",
-					"neo-tree",
-					"Trouble",
-					"lazy",
-					"mason",
-					"notify",
-					"toggleterm",
-					"lazyterm",
-					"oil",
-				},
-				callback = function()
-					---@diagnostic disable-next-line: inject-field
-					vim.b.miniindentscope_disable = true
-				end,
-			})
-		end,
-	},
+  -- hex color thing
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = { "InsertEnter" },
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
 
-	-- git integration for buffers
-	{
-		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		config = function()
-			require("gitsigns").setup()
-		end,
-	},
+  -- tailwindcss color thing
+  {
+    "themaxmarchuk/tailwindcss-colors.nvim",
+    event = { "InsertEnter" },
+    config = function()
+      require("tailwindcss-colors").setup()
+    end,
+  },
 
-	-- maximize current selected buffer
-	{
-		"szw/vim-maximizer",
-		cmd = { "MaximizerToggle" },
-	},
+  -- highlight all occurances of the word under your cursor similar to vim-illuminate
+  {
+    "echasnovski/mini.cursorword",
+    version = false,
+    config = function()
+      require("mini.cursorword").setup()
+    end,
+  },
 
-	-- indentation guides for neovim
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = {
-			scope = {
-				enabled = true,
-				show_start = true,
-				show_end = true,
-			},
-			exclude = {
-				filetypes = {
-					"help",
-					"dashboard",
-					"lazy",
-				},
-			},
-		},
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		-- config = function()
-		-- 	require("ibl").setup({})
-		-- end,
-	},
+  -- visualize indents (with pretty animations)
+  {
+    "echasnovski/mini.indentscope",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {
+      -- symbol = "▏",
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+          "oil",
+        },
+        callback = function()
+          ---@diagnostic disable-next-line: inject-field
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+  },
 
-	-- notification manager
-	{
-		"rcarriga/nvim-notify",
-		event = { "VeryLazy" },
-		config = function()
-			require("plugins.configs.notify").setup()
-		end,
-	},
+  -- git integration for buffers
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
 
-	-- statusline
-	{
-		"nvim-lualine/lualine.nvim",
-		event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePre" },
-		cond = function()
-			if nvim_config.line == "lualine" then
-				return true
-			end
-		end,
-		dependencies = {
-			-- "ThePrimeagen/harpoon",
-			{
-				"f-person/git-blame.nvim",
-				event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-			},
-		},
-		config = function()
-			require("plugins.configs.lualine").setup()
-		end,
-	},
+  -- maximize current selected buffer
+  {
+    "szw/vim-maximizer",
+    cmd = { "MaximizerToggle" },
+  },
 
-	{
-		"tamton-aquib/staline.nvim",
-		event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePre" },
-		cond = function()
-			if nvim_config.line == "staline" then
-				return true
-			end
-		end,
-		config = function()
-			require("plugins.configs.staline").setup()
-		end,
-	},
+  -- indentation guides for neovim
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {
+      scope = {
+        enabled = true,
+        show_start = true,
+        show_end = true,
+      },
+      exclude = {
+        filetypes = {
+          "help",
+          "dashboard",
+          "lazy",
+        },
+      },
+    },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    -- config = function()
+    -- 	require("ibl").setup({})
+    -- end,
+  },
 
-	-- tabs :)
-	{
-		"romgrk/barbar.nvim",
-		dependencies = {
-			"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
-			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
-		},
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		init = function()
-			vim.g.barbar_auto_setup = false
-		end,
-		opts = {
-			animation = true,
-			clickable = true,
-			icons = {
-				buffer_index = true,
-				button = "",
-				preset = "slanted",
-				diagnostics = {
-					[vim.diagnostic.severity.ERROR] = { enabled = true, icon = " " },
-					[vim.diagnostic.severity.WARN] = { enabled = true, icon = " " },
-					[vim.diagnostic.severity.INFO] = { enabled = true, icon = " " },
-					[vim.diagnostic.severity.HINT] = { enabled = true, icon = "󱧢 " },
-				},
-				gitsigns = {
-					added = { enabled = true, icon = " " },
-					changed = { enabled = true, icon = " " },
-					deleted = { enabled = true, icon = " " },
-				},
-			},
-			sidebar_filetypes = {
-				["neo-tree"] = { event = "BufWipeout" },
-			},
-			-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-			-- animation = true,
-			-- insert_at_start = true,
-			-- …etc.
-		},
-	},
+  -- notification manager
 
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		-- event = { "BufReadPre" },
-		keys = { "<leader>wd" },
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {
-			-- configurations go here
-		},
-	},
+  -- statusline
 
-	{
-		"sidebar-nvim/sidebar.nvim",
-		event = { "VeryLazy" },
-		config = function()
-			require("sidebar-nvim").setup({
-				disable_default_keybindings = 1,
-			})
-		end,
-	},
+  -- tabs :)
+  {
+    "romgrk/barbar.nvim",
+    dependencies = {
+      "lewis6991/gitsigns.nvim",  -- OPTIONAL: for git status
+      "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+    },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      animation = true,
+      clickable = true,
+      icons = {
+        buffer_index = true,
+        button = "",
+        preset = "slanted",
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = " " },
+          [vim.diagnostic.severity.WARN] = { enabled = true, icon = " " },
+          [vim.diagnostic.severity.INFO] = { enabled = true, icon = " " },
+          [vim.diagnostic.severity.HINT] = { enabled = true, icon = "󱧢 " },
+        },
+        gitsigns = {
+          added = { enabled = true, icon = " " },
+          changed = { enabled = true, icon = " " },
+          deleted = { enabled = true, icon = " " },
+        },
+      },
+      sidebar_filetypes = {
+        ["neo-tree"] = { event = "BufWipeout" },
+      },
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+  },
 
-	{ "LudoPinelli/comment-box.nvim" },
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    -- event = { "BufReadPre" },
+    keys = { "<leader>wd" },
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+      -- configurations go here
+    },
+  },
 
-	--#endregion
+  {
+    "sidebar-nvim/sidebar.nvim",
+    event = { "VeryLazy" },
+    config = function()
+      require("sidebar-nvim").setup({
+        disable_default_keybindings = 1,
+      })
+    end,
+  },
 
-	-- ╭─────────────────────────────────────────────────────────╮
-	-- │                           LSP                           │
-	-- ╰─────────────────────────────────────────────────────────╯
+  { "LudoPinelli/comment-box.nvim" },
 
-	--#region LSP
+  --#endregion
 
-	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPost" },
-		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
-		dependencies = {
-			-- Plugin and UI to automatically install LSPs to stdpath
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+  -- ╭─────────────────────────────────────────────────────────╮
+  -- │                           LSP                           │
+  -- ╰─────────────────────────────────────────────────────────╯
 
-			-- Install none-ls for diagnostics, code actions, and formatting
-			"nvimtools/none-ls.nvim",
+  --#region LSP
 
-			-- Install neodev for better nvim configuration and plugin authoring via lsp configurations
-			"folke/neodev.nvim",
+  --#endregion
 
-			"nvim-lua/plenary.nvim",
+  -- ╭─────────────────────────────────────────────────────────╮
+  -- │                       Treesitter                        │
+  -- ╰─────────────────────────────────────────────────────────╯
 
-			-- Progress/Status update for LSP
-			{
-				"j-hui/fidget.nvim",
-				tag = "legacy",
+  --#region treesitter
 
-				config = function()
-					-- Turn on LSP, formatting, and linting status and progress information
-					require("fidget").setup({
-						text = {
-							spinner = "dots_negative",
-						},
-					})
-				end,
-			},
-		},
-		config = function()
-			require("plugins.configs.lsp").setup()
-		end,
-	},
+  --#endregion
 
-	--#endregion
+  -- ╭─────────────────────────────────────────────────────────╮
+  -- │                          other                          │
+  -- ╰─────────────────────────────────────────────────────────╯
 
-	-- ╭─────────────────────────────────────────────────────────╮
-	-- │                       Treesitter                        │
-	-- ╰─────────────────────────────────────────────────────────╯
+  --#region other
 
-	--#region treesitter
+  -- make command line easy and pretty
 
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-		keys = {
-			"<c-space>",
-			"<c-s>",
-			"<c-backspace>",
-		},
-		dependencies = {
-			-- Additional text objects for treesitter
-			{
-				"nvim-treesitter/nvim-treesitter-textobjects",
-				event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-			},
-		},
-		opts = function()
-			return require("plugins.configs.treesitter")
-		end,
-		config = function()
-			---@diagnostic disable: missing-fields
-			require("nvim-treesitter.configs").setup({})
-		end,
-	},
-
-	--#endregion
-
-	-- ╭─────────────────────────────────────────────────────────╮
-	-- │                          other                          │
-	-- ╰─────────────────────────────────────────────────────────╯
-
-	--#region other
-
-	-- make command line easy and pretty
-	{
-		"gelguy/wilder.nvim",
-		keys = {
-			":",
-			"/",
-			"?",
-		},
-		config = function()
-			require("plugins.configs.wilder").setup()
-		end,
-	},
-
-	-- session management
-	{
-		"folke/persistence.nvim",
-		event = "BufReadPre",
-		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+  -- session management
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
     -- stylua: ignore
     keys = {
       { "<leader>sr", function() require("persistence").load() end,                desc = "Restore Session" },
       { "<leader>sl", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
       { "<leader>su", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
     },
-	},
+  },
 
-	-- Prevent neovim inside neovim
-	{
-		"samjwill/nvim-unception",
-		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-		lazy = false,
-		init = function()
-			vim.g.unception_block_while_host_edits = true
-		end,
-	},
+  -- Prevent neovim inside neovim
+  {
+    "samjwill/nvim-unception",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    lazy = false,
+    init = function()
+      vim.g.unception_block_while_host_edits = true
+    end,
+  },
 
-	-- create and manage gists
-	{
-		"Rawnly/gist.nvim",
-		cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
-		config = true,
-	},
+  -- create and manage gists
+  {
+    "Rawnly/gist.nvim",
+    cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
+    config = true,
+  },
 
-	-- time tracker for developers
-	{
-		"wakatime/vim-wakatime",
-		event = "BufReadPost",
-	},
+  -- time tracker for developers
+  {
+    "wakatime/vim-wakatime",
+    event = "BufReadPost",
+  },
 
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			-- Set delay for whichkey to popup to 300ms
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- todo
-			defaults = {},
-		},
-		config = function()
-			require("which-key").register({
-				b = {
-					name = "Buffer",
-				},
-				c = {
-					name = "Code",
-				},
-				g = {
-					name = "Git",
-				},
-				n = {
-					name = "Noh",
-				},
-				o = {
-					name = "Open",
-				},
-				r = {
-					name = "Rename/Rotate",
-				},
-				s = {
-					name = "Search",
-				},
-				t = {
-					name = "Tab/Trouble/Toggle",
-				},
-				u = {
-					name = "Toggle conceal",
-				},
-				w = {
-					name = "Window/Winbar",
-				},
-				["["] = {
-					name = "Goto previous",
-				},
-				["]"] = {
-					name = "Goto next",
-				},
-			}, { prefix = "<leader>" })
-			-- code
-		end,
-	},
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      -- Set delay for whichkey to popup to 300ms
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- todo
+      defaults = {},
+    },
+    config = function()
+      require("which-key").register({
+        b = {
+          name = "Buffer",
+        },
+        c = {
+          name = "Code",
+        },
+        g = {
+          name = "Git",
+        },
+        n = {
+          name = "Noh",
+        },
+        o = {
+          name = "Open",
+        },
+        r = {
+          name = "Rename/Rotate",
+        },
+        s = {
+          name = "Search",
+        },
+        t = {
+          name = "Tab/Trouble/Toggle",
+        },
+        u = {
+          name = "Toggle conceal",
+        },
+        w = {
+          name = "Window/Winbar",
+        },
+        ["["] = {
+          name = "Goto previous",
+        },
+        ["]"] = {
+          name = "Goto next",
+        },
+      }, { prefix = "<leader>" })
+      -- code
+    end,
+  },
 
-	{
-		"nvim-orgmode/orgmode",
-		dependencies = {
-			{ "nvim-treesitter/nvim-treesitter", lazy = true },
-		},
-		event = "VeryLazy",
-		config = function()
-			-- Load treesitter grammar for org
-			require("orgmode").setup_ts_grammar()
+  {
+    "nvim-orgmode/orgmode",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter", lazy = true },
+    },
+    event = "VeryLazy",
+    config = function()
+      -- Load treesitter grammar for org
+      require("orgmode").setup_ts_grammar()
 
-			-- Setup treesitter
-			require("nvim-treesitter.configs").setup({
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = { "org" },
-				},
-				ensure_installed = { "org" },
-			})
+      -- Setup treesitter
+      require("nvim-treesitter.configs").setup({
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = { "org" },
+        },
+        ensure_installed = { "org" },
+      })
 
-			-- Setup orgmode
-			require("orgmode").setup({
-				org_agenda_files = "~/orgfiles/**/*",
-				org_default_notes_file = "~/orgfiles/refile.org",
-			})
-		end,
-	},
+      -- Setup orgmode
+      require("orgmode").setup({
+        org_agenda_files = "~/orgfiles/**/*",
+        org_default_notes_file = "~/orgfiles/refile.org",
+      })
+    end,
+  },
 
-	-- essentially just helper functions that are annyoing to write
-	"nvim-lua/plenary.nvim",
+  -- essentially just helper functions that are annyoing to write
+  "nvim-lua/plenary.nvim",
 
-	-- fennel development
-	{
-		"rktjmp/hotpot.nvim",
-		event = "VeryLazy",
-	},
+  -- fennel development
+  {
+    "rktjmp/hotpot.nvim",
+    event = "VeryLazy",
+  },
 
-	{
-		"alexghergh/nvim-tmux-navigation",
-		init = function()
-			require("nvim-tmux-navigation")
-		end,
-	},
+  {
+    "alexghergh/nvim-tmux-navigation",
+    init = function()
+      require("nvim-tmux-navigation")
+    end,
+  },
 
-	{
-		"xiyaowong/telescope-emoji.nvim",
-		cmd = { "Telescope" },
-		config = function()
-			require("telescope").load_extension("emoji")
-		end,
-	},
+  {
+    "xiyaowong/telescope-emoji.nvim",
+    cmd = { "Telescope" },
+    config = function()
+      require("telescope").load_extension("emoji")
+    end,
+  },
 
-	--#endregion
-	--
+  --#endregion
+  --
 
-	-- ╭─────────────────────────────────────────────────────────╮
-	-- │                          langs                          │
-	-- ╰─────────────────────────────────────────────────────────╯
+  -- ╭─────────────────────────────────────────────────────────╮
+  -- │                          langs                          │
+  -- ╰─────────────────────────────────────────────────────────╯
 
-	--#region langs
-
-	-- Zig.
-	{
-		"ziglang/zig.vim",
-		ft = "zig",
-	},
-
-	-- Rust
-	{
-		"simrat39/rust-tools.nvim",
-		ft = "rust",
-	},
-
-	-- typescript / tsreact
-	{
-		"dmmulroy/tsc.nvim",
-		ft = { "typescript", "typescriptreact" },
-		config = function()
-			require("tsc").setup()
-		end,
-	},
-
-	-- haskell
-	{
-		"mrcjkb/haskell-tools.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		version = "^3", -- Recommended
-		ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
-	},
-
-	-- go
-	{
-		"ray-x/go.nvim",
-		dependencies = { -- optional packages
-			"ray-x/guihua.lua",
-			"neovim/nvim-lspconfig",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function()
-			require("go").setup()
-		end,
-		ft = { "go", "gomod" },
-		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-	},
-
-	--#endregion
+  -- --#region langs
+  --
+  -- -- Zig.
+  -- {
+  -- 	"ziglang/zig.vim",
+  -- 	ft = "zig",
+  -- },
+  --
+  -- -- Rust
+  -- {
+  -- 	"simrat39/rust-tools.nvim",
+  -- 	ft = "rust",
+  -- },
+  --
+  -- -- typescript / tsreact
+  -- {
+  -- 	"dmmulroy/tsc.nvim",
+  -- 	ft = { "typescript", "typescriptreact" },
+  -- 	config = function()
+  -- 		require("tsc").setup()
+  -- 	end,
+  -- },
+  --
+  -- -- haskell
+  -- {
+  -- 	"mrcjkb/haskell-tools.nvim",
+  -- 	dependencies = {
+  -- 		"nvim-lua/plenary.nvim",
+  -- 	},
+  -- 	version = "^3", -- Recommended
+  -- 	ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+  -- },
+  --
+  -- -- go
+  -- {
+  -- 	"ray-x/go.nvim",
+  -- 	dependencies = { -- optional packages
+  -- 		"ray-x/guihua.lua",
+  -- 		"neovim/nvim-lspconfig",
+  -- 		"nvim-treesitter/nvim-treesitter",
+  -- 	},
+  -- 	config = function()
+  -- 		require("go").setup()
+  -- 	end,
+  -- 	ft = { "go", "gomod" },
+  -- 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  -- },
+  --
+  -- --#endregion
+  { import = "plugins.configs" },
 }
-local config = require("plugins.configs.lazy")
+-- local config = require("plugins.configs.lazy")
 
-require("lazy").setup(plugins, config.lazy)
+local config = {
+
+  defaults = { lazy = false },
+  -- install = { colorscheme = { "nvchad" } },
+
+  ui = {
+    icons = {
+      ft = "",
+      lazy = "󰂠 ",
+      loaded = "",
+      not_loaded = "",
+    },
+  },
+
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "2html_plugin",
+        "tohtml",
+        "getscript",
+        "getscriptPlugin",
+        "gzip",
+        "logipat",
+        "netrw",
+        "netrwPlugin",
+        "netrwSettings",
+        "netrwFileHandlers",
+        "matchit",
+        "tar",
+        "tarPlugin",
+        "rrhelper",
+        "spellfile_plugin",
+        "vimball",
+        "vimballPlugin",
+        "zip",
+        "zipPlugin",
+        "tutor",
+        "rplugin",
+        "syntax",
+        "synmenu",
+        "optwin",
+        "compiler",
+        "bugreport",
+        "ftplugin",
+      },
+    },
+  },
+}
+
+require("lazy").setup(plugins, config)
