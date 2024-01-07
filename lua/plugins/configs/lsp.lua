@@ -37,6 +37,7 @@ return {
         bashls = {},
         biome = {},
         clangd = {},
+        csharp_ls = {},
         cssls = {},
         gopls = {},
         graphql = {},
