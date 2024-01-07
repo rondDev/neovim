@@ -24,10 +24,10 @@ local plugins = {
     event = { "InsertEnter" },
     config = function()
       require("better_escape").setup({
-        mapping = { "jk", "jj" }, -- a table with mappings to use
+        mapping = { "jk", "jj" },   -- a table with mappings to use
         timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-        keys = "<Esc>",         -- keys used for escaping, if it is a function will use the result everytime
+        clear_empty_lines = false,  -- clear line after escaping if there is only whitespace
+        keys = "<Esc>",             -- keys used for escaping, if it is a function will use the result everytime
       })
     end,
   },
@@ -153,52 +153,6 @@ local plugins = {
   --   │ --------------------------------------------------------------------- │
   --   ╰───────────────────────────────────────────────────────────────────────╯
   --#region UI
-
-
-  {
-    -- TODO: create proper config
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      lsp = {
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      routes = {
-        {
-          filter = {
-            event = "msg_show",
-            any = {
-              { find = "%d+L, %d+B" },
-              { find = "; after #%d+" },
-              { find = "; before #%d+" },
-            },
-          },
-          view = "mini",
-        },
-      },
-      presets = {
-        bottom_search = true,
-        command_palette = true,
-        long_message_to_split = true,
-        inc_rename = true,
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      { "<S-Enter>",   function() require("noice").redirect(vim.fn.getcmdline()) end,                 mode = "c",                 desc = "Redirect Cmdline" },
-      { "<leader>snl", function() require("noice").cmd("last") end,                                   desc = "Noice Last Message" },
-      { "<leader>snh", function() require("noice").cmd("history") end,                                desc = "Noice History" },
-      { "<leader>sna", function() require("noice").cmd("all") end,                                    desc = "Noice All" },
-      { "<leader>snd", function() require("noice").cmd("dismiss") end,                                desc = "Dismiss All" },
-      { "<c-f>",       function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end,  silent = true,              expr = true,              desc = "Scroll forward",  mode = { "i", "n", "s" } },
-      { "<c-b>",       function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true,              expr = true,              desc = "Scroll backward", mode = { "i", "n", "s" } },
-    },
-  },
-
 
   -- color scheme
   {
@@ -371,7 +325,7 @@ local plugins = {
   {
     "romgrk/barbar.nvim",
     dependencies = {
-      "lewis6991/gitsigns.nvim",  -- OPTIONAL: for git status
+      "lewis6991/gitsigns.nvim",     -- OPTIONAL: for git status
       "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
     },
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
