@@ -9,7 +9,7 @@ return {
       { "folke/neodev.nvim",  opts = {} },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-
+      "nvimtools/none-ls.nvim",
     },
     --@class PluginLspOpts
     opts = {
@@ -89,11 +89,10 @@ return {
         yamlls = {},
         zls = {},
       },
-      setup = {
-
-      },
+      setup = {},
     },
     config = function(_, opts)
+      local null_ls = require("null-ls")
       if Utils.has("neoconf.nvim") then
         local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
         require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
@@ -109,8 +108,7 @@ return {
       Utils.on_attach(function(client, buffer)
         require("plugins.lsp.lsp_keymaps").on_attach(client, buffer)
         vim.api.nvim_buf_create_user_command(buffer, "Format", function(_)
-          vim.lsp.buf.format({
-          })
+          vim.lsp.buf.format({})
         end, { desc = "LSP: Format current buffer with LSP" })
       end)
 
@@ -204,6 +202,13 @@ return {
       if have_mason then
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
+
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          -- null_ls.builtins.completion.spell,
+        },
+      })
     end,
   },
 
@@ -246,6 +251,14 @@ return {
       else
         ensure_installed()
       end
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
     end,
   },
 }
