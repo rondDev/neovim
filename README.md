@@ -11,6 +11,7 @@ it serves as my personal config and takes heavy inspiration from:
 ![](https://i.rond.cc/api/4VM68Fwagqkn.png)
 
 Below is all the plugins in this config in no particular order.
+The list may not be up to date.  
 They are loosely categorized into the 6 categories below:
 
 - Coding
