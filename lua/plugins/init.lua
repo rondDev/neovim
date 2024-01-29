@@ -283,7 +283,9 @@ local plugins = {
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		config = function()
-			require("gitsigns").setup()
+			require("gitsigns").setup({
+				attach_to_untracked = true,
+			})
 		end,
 	},
 
