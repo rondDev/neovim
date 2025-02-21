@@ -6,7 +6,7 @@ return {
 		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		dependencies = {
 			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-			{ "folke/neodev.nvim", opts = {} },
+			{ "folke/lazydev.nvim", opts = {} },
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"nvimtools/none-ls.nvim",
@@ -67,6 +67,7 @@ return {
 					},
 				},
 				marksman = {},
+				nushell = {},
 				-- ocamllsp = {},
 				prismals = {},
 				pyright = {},
@@ -212,6 +213,9 @@ return {
 
 		"williamboman/mason.nvim",
 		cmd = "Mason",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+		},
 		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		build = ":MasonUpdate",
 		opts = {
@@ -223,6 +227,7 @@ return {
 		},
 		---@param opts MasonSettings | {ensure_installed: string[]}
 		config = function(_, opts)
+			require("mason-lspconfig").setup()
 			require("mason").setup(opts)
 			local mr = require("mason-registry")
 			mr:on("package:install:success", function()
