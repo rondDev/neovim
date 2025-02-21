@@ -6,13 +6,13 @@ return {
 			require("mini.files").setup()
 		end,
 		keys = {
-			{
-				"<leader>oo",
-				function()
-					MiniFiles.open()
-				end,
-				desc = "Open mini files",
-			},
+			-- {
+			-- 	"<leader>oo",
+			-- 	function()
+			-- 		MiniFiles.open()
+			-- 	end,
+			-- 	desc = "Open mini files",
+			-- },
 		},
 	},
 	-- easy commenting
