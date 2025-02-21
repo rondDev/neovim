@@ -255,6 +255,12 @@ return {
 	},
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
 	{
+		"vladdoster/remember.nvim",
+		config = function()
+			require("remember")
+		end,
+	},
+	{
 		-- NOTE: would like to sort this by category
 		"mrjones2014/legendary.nvim",
 		-- since legendary.nvim handles all your keymaps/commands,
@@ -272,5 +278,12 @@ return {
 				desc = "Smart Find Files",
 			},
 		},
+	},
+	{
+		"arnamak/stay-centered.nvim",
+		-- lazy = false,
+		-- opts = {
+		--   skip_filetypes = { 'lua', 'typescript' },
+		-- }
 	},
 }
