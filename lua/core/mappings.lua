@@ -154,6 +154,10 @@ M.general = {
 		--   end,
 		--   "Format document",
 		-- },
+		["<leader>fs"] = {
+			"<cmd>w<CR>",
+			"Save file",
+		},
 
 		-- ["<leader>gb"] = { "<cmd>Gitsigns ottgle_current_line_blame<CR>", "Toggle current line blame" },
 		-- ["<leader>gf"] = {
@@ -188,7 +192,7 @@ M.general = {
 		["<leader>no"] = { "<cmd>noh<CR>", "Turn off highlighted results" },
 
 		-- [o]pen keys
-		-- ["<leader>oo"] = { "<cmd>Oil<CR>", "Open Oil" },
+		["<leader>oo"] = { "<cmd>Oil<CR>", "Open Oil" },
 		-- ["<leader>oo"] = { "<cmd>MiniFiles.open()<CR>", "Open Oil" },
 		["<leader>ot"] = { "<cmd>term<CR>", "Open Terminal" },
 
