@@ -5,10 +5,18 @@ return {
 	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true },
+		bufdelete = { enabled = true },
 		dashboard = { enabled = true },
+		debug = { enabled = true },
+		dim = { enabled = true },
 		explorer = { enabled = true },
+		git = { enabled = true },
+		gitbrowse = { enabled = true },
+		image = { enabled = true },
 		indent = { enabled = true },
 		input = { enabled = true },
+		layout = { enabled = true },
+		lazygit = { enabled = true },
 		notifier = {
 			enabled = true,
 			timeout = 3000,
@@ -231,6 +239,13 @@ return {
 		},
 		{
 			"<leader>sC",
+			function()
+				Snacks.picker.commands()
+			end,
+			desc = "Commands",
+		},
+		{
+			"<M-x>",
 			function()
 				Snacks.picker.commands()
 			end,
