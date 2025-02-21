@@ -244,13 +244,13 @@ return {
 			end,
 			desc = "Commands",
 		},
-		{
-			"<M-x>",
-			function()
-				Snacks.picker.commands()
-			end,
-			desc = "Commands",
-		},
+		-- {
+		-- 	"<M-x>",
+		-- 	function()
+		-- 		Snacks.picker.commands()
+		-- 	end,
+		-- 	desc = "Commands",
+		-- },
 		{
 			"<leader>sd",
 			function()
