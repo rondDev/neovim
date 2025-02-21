@@ -254,4 +254,23 @@ return {
 		config = true,
 	},
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
+	{
+		-- NOTE: would like to sort this by category
+		"mrjones2014/legendary.nvim",
+		-- since legendary.nvim handles all your keymaps/commands,
+		-- its recommended to load legendary.nvim before other plugins
+		priority = 10000,
+		lazy = false,
+		-- sqlite is only needed if you want to use frecency sorting
+		dependencies = { "kkharji/sqlite.lua" },
+		keys = {
+			{
+				"<M-x>",
+				function()
+					vim.cmd(":Legendary")
+				end,
+				desc = "Smart Find Files",
+			},
+		},
+	},
 }
