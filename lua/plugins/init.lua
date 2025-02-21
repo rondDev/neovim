@@ -4,13 +4,6 @@ return {
 		"tpope/vim-surround",
 	},
 
-	{
-		"nyoom-engineering/oxocarbon.nvim",
-		config = function()
-			vim.cmd.colorscheme("oxocarbon")
-		end,
-	},
-
 	-- hex color thing
 	{
 		"norcalli/nvim-colorizer.lua",
