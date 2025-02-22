@@ -272,9 +272,7 @@ return {
 		keys = {
 			{
 				"<M-x>",
-				function()
-					vim.cmd(":Legendary")
-				end,
+				"<cmd>:Legendary<CR>",
 				desc = "Smart Find Files",
 			},
 		},
