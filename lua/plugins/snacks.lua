@@ -16,7 +16,7 @@ return {
 		indent = { enabled = true },
 		input = { enabled = true },
 		layout = { enabled = true },
-		lazygit = { enabled = true },
+		lazygit = { enabled = false },
 		notifier = {
 			enabled = true,
 			timeout = 3000,
