@@ -11,9 +11,7 @@ return {
       --    "curl", "wget", "bitsadmin", "go"
       require("dbee").install("go")
     end,
-    config = function()
-      require("dbee").setup( --[[optional config]])
-    end,
+    opts = {},
   },
   -- {
   -- 	"xemptuous/sqlua.nvim",
