@@ -166,6 +166,8 @@ return {
 
 			ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
 
+			ins_left({ "location", color = { fg = colors.fg, gui = "bold" } })
+
 			ins_left({
 				"diagnostics",
 				sources = { "nvim_diagnostic" },
@@ -177,6 +179,7 @@ return {
 				},
 			})
 
+			-- [Line location / Lines total]
 			ins_left({
 				-- "vim.api.nvim_win_get_cursor(0)[1]",
 				"%10([%l/%L%)]",
