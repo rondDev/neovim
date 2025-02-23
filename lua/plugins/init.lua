@@ -182,28 +182,6 @@ return {
 		"wakatime/vim-wakatime",
 		event = "BufReadPost",
 	},
-	-- org mode :D
-	{
-		"chipsenkbeil/org-roam.nvim",
-		tag = "0.1.1",
-		dependencies = {
-			{ "nvim-treesitter/nvim-treesitter", lazy = true },
-			{
-				"nvim-orgmode/orgmode",
-				build = ":TSInstall org",
-				tag = "0.3.7",
-			},
-		},
-		config = function()
-			require("org-roam").setup({
-				directory = "~/org_roam_files",
-				-- optional
-				org_files = {
-					"~/org",
-				},
-			})
-		end,
-	},
 	-- essentially just helper functions that are annyoing to write
 	"nvim-lua/plenary.nvim",
 
