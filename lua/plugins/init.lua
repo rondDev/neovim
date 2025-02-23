@@ -43,6 +43,7 @@ return {
 	-- nice icons everywhere
 	{
 		"nvim-tree/nvim-web-devicons",
+		event = "VeryLazy",
 		config = function()
 			require("nvim-web-devicons").setup()
 		end,
@@ -95,6 +96,7 @@ return {
 	-- maximize current selected buffer
 	{
 		"szw/vim-maximizer",
+		event = "VeryLazy",
 		cmd = { "MaximizerToggle" },
 	},
 
@@ -125,6 +127,7 @@ return {
 	{
 		"utilyre/barbecue.nvim",
 		name = "barbecue",
+		event = "VeryLazy",
 		-- event = { "BufReadPre" },
 		keys = { "<leader>wd" },
 		version = "*",
@@ -166,6 +169,7 @@ return {
 	{
 		"LhKipp/nvim-nu",
 		build = ":TSInstall nu",
+		event = { "VeryLazy" },
 		config = function()
 			require("nu").setup()
 		end,
@@ -173,6 +177,7 @@ return {
 	-- create and manage gists
 	{
 		"Rawnly/gist.nvim",
+		event = { "VeryLazy" },
 		cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
 		config = true,
 	},
@@ -193,6 +198,7 @@ return {
 
 	{
 		"alexghergh/nvim-tmux-navigation",
+		event = { "VeryLazy" },
 		init = function()
 			require("nvim-tmux-navigation")
 		end,
@@ -200,6 +206,7 @@ return {
 
 	{
 		"xiyaowong/telescope-emoji.nvim",
+		event = { "VeryLazy" },
 		cmd = { "Telescope" },
 		config = function()
 			require("telescope").load_extension("emoji")
@@ -217,23 +224,11 @@ return {
 			vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
 		end,
 	},
-
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
-
-			-- Only one of these is needed.
-			-- "nvim-telescope/telescope.nvim", -- optional
-			"ibhagwan/fzf-lua", -- optional
-			-- "echasnovski/mini.pick",         -- optional
-		},
-		config = true,
-	},
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
+
 	{
 		"vladdoster/remember.nvim",
+		event = { "VeryLazy" },
 		config = function()
 			require("remember")
 		end,
@@ -260,6 +255,7 @@ return {
 	},
 	{
 		"arnamak/stay-centered.nvim",
+		event = { "VeryLazy" },
 		-- lazy = false,
 		-- opts = {
 		--   skip_filetypes = { 'lua', 'typescript' },
