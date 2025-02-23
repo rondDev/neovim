@@ -1,7 +1,7 @@
 return {
   {
     "kndndrj/nvim-dbee",
-    lazy = true,
+    -- lazy = true,
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
