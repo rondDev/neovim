@@ -12,6 +12,13 @@ return {
       require("dbee").install("go")
     end,
     opts = {},
+    keys = {
+      {
+        "<leader>td",
+        "<cmd>Dbee toggle<CR>",
+        "[T]oggle [D]atabase UI",
+      },
+    },
   },
   -- {
   -- 	"xemptuous/sqlua.nvim",
