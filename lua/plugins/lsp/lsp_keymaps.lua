@@ -13,34 +13,39 @@ function M.get()
 	if M._keys then
 		return M._keys
 	end
-    -- stylua: ignore
-    M._keys =  {
-      { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
-      { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
-      { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References" },
-      { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-      { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
-      { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
-      { "K", vim.lsp.buf.hover, desc = "Hover" },
-      { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-      { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
-      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-      {
-        "<leader>cA",
-        function()
-          vim.lsp.buf.code_action({
-            context = {
-              only = {
-                "source",
-              },
-              diagnostics = {},
+  -- stylua: ignore
+  M._keys = {
+    { "<leader>cl", "<cmd>LspInfo<cr>",                                  desc = "Lsp Info" },
+    -- { "gd",         function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end,      desc = "Goto Definition",       has = "definition" },
+    -- { "gr",         function() Snacks.picker.pick({ source = "lsp_references" }) end,                       desc = "References" },
+    -- { "gD",         vim.lsp.buf.declaration,                                                                desc = "Goto Declaration" },
+    -- { "gI",         function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end,  desc = "Goto Implementation" },
+    -- { "gy",         function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
+    { "gd",         function() Snacks.picker.lsp_definitions() end,      desc = "Goto Definition" },
+    { "gD",         function() Snacks.picker.lsp_declarations() end,     desc = "Goto Declaration" },
+    { "gr",         function() Snacks.picker.lsp_references() end,       nowait = true,                  desc = "References" },
+    { "gI",         function() Snacks.picker.lsp_implementations() end,  desc = "Goto Implementation" },
+    { "gy",         function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+    { "K",          vim.lsp.buf.hover,                                   desc = "Hover" },
+    { "gK",         vim.lsp.buf.signature_help,                          desc = "Signature Help",        has = "signatureHelp" },
+    { "<c-k>",      vim.lsp.buf.signature_help,                          mode = "i",                     desc = "Signature Help", has = "signatureHelp" },
+    { "<leader>ca", vim.lsp.buf.code_action,                             desc = "Code Action",           mode = { "n", "v" },     has = "codeAction" },
+    {
+      "<leader>cA",
+      function()
+        vim.lsp.buf.code_action({
+          context = {
+            only = {
+              "source",
             },
-          })
-        end,
-        desc = "Source Action",
-        has = "codeAction",
-      }
+            diagnostics = {},
+          },
+        })
+      end,
+      desc = "Source Action",
+      has = "codeAction",
     }
+  }
 	if require("core.utils").has("inc-rename.nvim") then
 		M._keys[#M._keys + 1] = {
 			"<leader>cr",
