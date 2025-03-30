@@ -316,4 +316,8 @@ return {
 			-- see below for full list of options 👇
 		},
 	},
+	{
+		"pteroctopus/faster.nvim",
+	},
+	{ "nvim-treesitter/nvim-treesitter" },
 }
