@@ -283,41 +283,36 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
-		"epwalsh/obsidian.nvim",
-		version = "*", -- recommended, use latest release instead of latest commit
-		lazy = true,
-		ft = "markdown",
-		-- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-		-- event = {
-		--   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-		--   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-		--   -- refer to `:h file-pattern` for more examples
-		--   "BufReadPre path/to/my-vault/*.md",
-		--   "BufNewFile path/to/my-vault/*.md",
-		-- },
-		dependencies = {
-			-- Required.
-			"nvim-lua/plenary.nvim",
-
-			-- see below for full list of optional dependencies 👇
-		},
-		opts = {
-			workspaces = {
-				-- {
-				-- 	name = "personal",
-				-- 	path = "~/vaults/personal",
-				-- },
-				{
-					name = "cross",
-					path = "~/.obsidian/cross/cross",
-				},
-			},
-
-			-- see below for full list of options 👇
-		},
-	},
-	{
 		"pteroctopus/faster.nvim",
 	},
 	{ "nvim-treesitter/nvim-treesitter" },
+	{
+		"serenevoid/kiwi.nvim",
+		opts = {
+			{
+				name = "work",
+				path = "work-wiki",
+			},
+			{
+				name = "personal",
+				path = "personal-wiki",
+			},
+		},
+		keys = {
+			{ "<leader>ww", ':lua require("kiwi").open_wiki_index()<cr>', desc = "Open Wiki index" },
+			{
+				"<leader>wp",
+				':lua require("kiwi").open_wiki_index("personal")<cr>',
+				desc = "Open index of personal wiki",
+			},
+			{ "T", ':lua require("kiwi").todo.toggle()<cr>', desc = "Toggle Markdown Task" },
+		},
+		lazy = true,
+	},
+	{
+		"folke/ts-comments.nvim",
+		opts = {},
+		event = "VeryLazy",
+		enabled = vim.fn.has("nvim-0.10.0") == 1,
+	},
 }
