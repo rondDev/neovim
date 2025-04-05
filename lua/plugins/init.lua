@@ -299,7 +299,8 @@ return {
 			},
 		},
 		keys = {
-			{ "<leader>ww", ':lua require("kiwi").open_wiki_index()<cr>', desc = "Open Wiki index" },
+			-- { "<leader>ww", ':lua require("kiwi").open_wiki_index()<cr>', desc = "Open Wiki index" },
+			{ "<leader>ww", ':lua require("kiwi").open_wiki_index("work")<cr>', desc = "Open Wiki index" },
 			{
 				"<leader>wp",
 				':lua require("kiwi").open_wiki_index("personal")<cr>',
